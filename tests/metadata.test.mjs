@@ -83,3 +83,18 @@ test('approved additions appear in project, domain, and technology scopes', () =
   assert.equal(projectRecords.find(p => p.id === 'pcl-6').status, 'prototype');
   assert.ok(!atlas.projects.some(p => p.slug === 'project-dna'));
 });
+
+import compiledTechnology from '../.metadata-test/explore/technology.js';
+test('technology profiles preserve exact uses and project-local capabilities', () => {
+  for (const technology of atlas.technologies) {
+    const profile = compiledTechnology.technologyProfile(atlas, technology.id);
+    const uses = atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === technology.id);
+    assert.equal(profile.projects.length, uses.length);
+    assert.equal(profile.patterns.reduce((total, item) => total + item.count, 0), uses.length);
+    for (const item of profile.projects) {
+      assert.equal(item.use.usage, uses.find(use => use.projectId === item.project.id).usage);
+      assert.deepEqual(item.capabilities.map(c => c.id).sort(), [...item.use.capabilityIds].sort());
+    }
+  }
+  assert.equal(compiledTechnology.technologyProfile(atlas, 'unknown'), undefined);
+});
