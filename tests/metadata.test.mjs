@@ -98,3 +98,25 @@ test('technology profiles preserve exact uses and project-local capabilities', (
   }
   assert.equal(compiledTechnology.technologyProfile(atlas, 'unknown'), undefined);
 });
+
+import compiledSkills from '../.metadata-test/explore/skills.js';
+test('skill evidence counts, domains, capabilities and co-occurrences derive from metadata', () => {
+  const skills = compiledSkills.deriveSkills(atlas);
+  assert.equal(skills.length, atlas.technologies.length);
+  for (const skill of skills) {
+    const uses = atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === skill.technology.id);
+    assert.equal(skill.projects.length, uses.length);
+    assert.equal(skill.evidence.reduce((sum, group) => sum + group.projects.length, 0), uses.length);
+    const projectIds = new Set(uses.map(use => use.projectId));
+    const domainIds = [...new Set(atlas.relationships.filter(r => r.type === 'belongs-to' && projectIds.has(r.projectId)).map(r => r.domainId))].sort();
+    assert.deepEqual(skill.domains.map(domain => domain.id).sort(), domainIds);
+    for (const related of skill.related) {
+      assert.notEqual(related.technology.id, skill.technology.id);
+      assert.equal(related.projectCount, atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === related.technology.id && projectIds.has(r.projectId)).length);
+    }
+    for (const group of skill.evidence) assert.ok(group.projects.every(item => item.use.section === group.section));
+  }
+  const filtered = compiledSkills.filterSkills(skills, { category: 'Language', domain: 'data-science', minimum: 2, query: 'python' });
+  assert.deepEqual(filtered.map(item => item.technology.id), ['python']);
+  assert.equal(compiledSkills.filterSkills(skills, { category: 'all', domain: 'all', minimum: 100, query: '' }).length, 0);
+});
