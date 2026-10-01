@@ -1,0 +1,7 @@
+import Link from 'next/link';
+import { stackSections, type AtlasData } from '@/lib/explore/model';
+import { projectStack, technologyHref } from '@/lib/explore/selectors';
+export function StackDNA({ data, projectId }: { data: AtlasData; projectId: string }) {
+  const stack = projectStack(data, projectId);
+  return <figure className="stack-dna"><figcaption><span className="eyebrow">STACK SEQUENCE</span><span>{stack.length.toString().padStart(2, '0')} TECHNOLOGIES</span></figcaption><div className="dna-sequence"><svg viewBox="0 0 100 600" preserveAspectRatio="none" aria-hidden="true"><path d="M25 0 C95 100,5 100,75 200 S5 300,25 400 S95 500,75 600"/><path d="M75 0 C5 100,95 100,25 200 S95 300,75 400 S5 500,25 600"/>{stackSections.map((section,i) => <line key={section} x1={i % 2 ? 25 : 15} x2={i % 2 ? 85 : 75} y1={i * 100 + 50} y2={i * 100 + 50}/>)}</svg>{stackSections.map((section,i) => <div className="dna-rung" key={section}><span className="dna-order">0{i+1}</span><div><a href={`#stack-${i}`} className="dna-section-label">{section}</a><div className="dna-technologies">{stack.filter(item => item.section === section).map(item => <Link href={technologyHref(item.technology.id)} key={item.id}>{item.technology.name}</Link>)}{!stack.some(item => item.section === section) && <span className="dna-absent">No dedicated layer</span>}</div></div></div>)}</div><p className="dna-caption">Six architectural layers. Each connection represents a role in the stack.</p></figure>;
+}

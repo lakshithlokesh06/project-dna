@@ -17,10 +17,19 @@ Open http://localhost:3000. `npm run lint` checks the source and `npm run build`
 - `components/`: navigation, identity, animated constellation, and section headings
 - `lib/data.ts`: explicitly illustrative project, technology, and metric content
 
-Built with Next.js App Router, TypeScript, Tailwind CSS v4, and Framer Motion. Navigation uses real page anchors; concept previews are intentionally informational. No project detail pages, backend, or graph data system is implemented. The decorative constellation respects reduced motion. System fonts avoid external font requests.
+Built with Next.js App Router, TypeScript, Tailwind CSS v4, and Framer Motion. Navigation uses real page anchors; concept previews are intentionally informational. Project details and graph relationships share one illustrative metadata source; no backend is implemented. The decorative constellation respects reduced motion. System fonts avoid external font requests.
 
 ## Interactive atlas
 
-`/explore` renders a deterministic, responsive bipartite network. Project nodes use square markers; technologies use circular markers. Pointer hover and keyboard focus trace direct relationships, and selecting a node opens its metadata and related nodes. Escape closes details. On phones, the details panel sits below the graph.
+`/explore` renders a deterministic, responsive bipartite network. Project nodes use square markers; technologies use circular markers. Pointer hover and keyboard focus trace direct relationships, and selecting a technology opens its metadata and related projects. Project nodes link to dedicated project pages. Escape closes details. On phones, the details panel sits below the graph.
 
 `lib/explore/model.ts` owns typed projects, technologies, domains, relationships, validation, and the layout adapter. `lib/explore/dataset.ts` supplies illustrative metadata without coordinates. `components/explore/network.tsx` accepts any `AtlasData` dataset. Add unique stable IDs and relationships to expand the atlas; domains are metadata shown in project details, rather than additional graph nodes. The two-column layout grows vertically with the dataset and avoids physics simulation. For large future datasets, introduce filtering or a different layout adapter.
+
+
+## Project DNA detail pages
+
+`/projects/[slug]` statically generates pages for the canonical projects in `lib/explore/dataset.ts`, with metadata and a project-specific 404 for unknown slugs. The page template renders six stack sections, architecture connections, project capabilities, and collection navigation. `components/projects/stack-dna.tsx` renders the stack as a linked DNA sequence; no ratings or percentages are inferred.
+
+Project records include a unique slug, architecture narrative, explicit technology connections, and capabilities. Each `uses` relationship records a section, role, exact usage, and project-scoped capability IDs. `validateAtlas` checks IDs, slugs, and references when the dataset loads. `lib/explore/selectors.ts` provides shared lookup and URL helpers. Landing previews derive from this same source.
+
+Technology links use `/explore?technology=<id>` to open a selected technology and highlight its connections. Unknown technology query IDs safely show the normal atlas. Previous / Next navigation follows dataset order, with explicit beginning and end states. All implementation descriptions and capabilities belong to illustrative sample projects, not actual repositories.
