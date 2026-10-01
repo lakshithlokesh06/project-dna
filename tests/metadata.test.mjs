@@ -120,3 +120,30 @@ test('skill evidence counts, domains, capabilities and co-occurrences derive fro
   assert.deepEqual(filtered.map(item => item.technology.id), ['python']);
   assert.equal(compiledSkills.filterSkills(skills, { category: 'all', domain: 'all', minimum: 100, query: '' }).length, 0);
 });
+
+import compiledTimeline from '../.metadata-test/explore/timeline.js';
+test('timeline stages preserve chronological adoption without inventing within-year dates', () => {
+  const data = structuredClone(atlas);
+  data.projects[0].year = 2024;
+  data.projects[1].year = 2025;
+  const stages = compiledTimeline.deriveTimeline(data);
+  assert.deepEqual(stages.map(stage => stage.year), [2024, 2025, 2026]);
+  assert.equal(stages.reduce((sum, stage) => sum + stage.projects.length, 0), data.projects.length);
+  const seen = new Set();
+  for (const stage of stages) {
+    for (const technology of stage.introducedTechnologies) {
+      assert.ok(!seen.has(technology.id));
+      const firstYear = Math.min(...data.relationships.filter(r => r.type === 'uses' && r.technologyId === technology.id).map(r => data.projects.find(p => p.id === r.projectId).year));
+      assert.equal(stage.year, firstYear);
+    }
+    stage.technologies.forEach(t => seen.add(t.id));
+    assert.ok(stage.projects.every(item => item.project.year === stage.year));
+  }
+  assert.equal(seen.size, data.technologies.length);
+  const filtered = compiledTimeline.filterTimeline(stages, 'data-science', 'python');
+  assert.ok(filtered.length > 0);
+  assert.ok(filtered.every(stage => stage.projects.every(item => item.domains.some(d => d.id === 'data-science') && item.stack.some(use => use.technologyId === 'python'))));
+  for (const stage of filtered) assert.deepEqual(stage.introducedTechnologies, stages.find(item => item.year === stage.year).introducedTechnologies);
+  assert.equal(compiledTimeline.filterTimeline(stages, 'missing', 'all').length, 0);
+  assert.equal(compiledTimeline.deriveTimeline(atlas).length, 1);
+});
