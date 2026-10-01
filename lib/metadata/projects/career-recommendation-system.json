@@ -1,0 +1,113 @@
+{
+  "id": "career-recommendation-system",
+  "slug": "career-recommendation-system",
+  "name": "Career Recommendation System",
+  "description": "Skill-based career recommendations with transparent skill-match categories and Groq-generated explanations.",
+  "summary": "Five weighted skill inputs pass through a persisted text classifier. Dataset-based skill matching produces impact categories, and a configured Groq integration generates the narrative explanation.",
+  "domainIds": [
+    "data-science",
+    "nlp-ai"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/career-recommendation-system",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Streamlit collects five skills with primary/secondary weighting. A persisted CountVectorizer transforms skill text and a Multinomial Naive Bayes model predicts the career. Pandas looks up matching career skills; Groq generates narrative explanations using the configured API key. Skill-impact text is rule-based, not computed SHAP attribution.",
+  "capabilities": [
+    {
+      "id": "recommendation",
+      "name": "Career suggestions",
+      "description": "Process skill inputs into recommended career directions."
+    },
+    {
+      "id": "explanations",
+      "name": "Skill impact explanations",
+      "description": "Display skill-impact categories and generate narrative explanations through Groq."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Skills form and results",
+      "usage": "Structured input and results views collect five skills and display recommendations.",
+      "capabilityIds": [
+        "recommendation",
+        "explanations"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Prediction orchestration",
+      "usage": "predictor.py coordinates skill processing, prediction, and explanation output.",
+      "capabilityIds": [
+        "recommendation"
+      ]
+    },
+    {
+      "technologyId": "groq",
+      "section": "Data / AI",
+      "role": "Narrative explanation API",
+      "usage": "A configured Groq client generates a three-paragraph career explanation from matched skills and the predicted career.",
+      "capabilityIds": [
+        "explanations"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Skill text classifier",
+      "usage": "CountVectorizer converts skill text to token counts; MultinomialNB predicts the career from persisted trained artifacts.",
+      "capabilityIds": [
+        "recommendation"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Career skill lookup",
+      "usage": "Pandas loads career_dataset.csv and selects primary and secondary skills for the predicted career.",
+      "capabilityIds": [
+        "recommendation",
+        "explanations"
+      ]
+    },
+    {
+      "technologyId": "joblib",
+      "section": "Backend",
+      "role": "Model artifact loading",
+      "usage": "Joblib persists and reloads model.pkl and vectorizer.pkl for skill classification.",
+      "capabilityIds": [
+        "recommendation"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "streamlit",
+      "targetTechnologyId": "python",
+      "description": "Collected skills enter the prediction orchestrator."
+    },
+    {
+      "sourceTechnologyId": "python",
+      "targetTechnologyId": "groq",
+      "description": "Recommendation context is passed to the explanation provider."
+    },
+    {
+      "sourceTechnologyId": "scikit-learn",
+      "targetTechnologyId": "joblib",
+      "description": "The trained vectorizer and Naive Bayes classifier are saved and reloaded as model artifacts."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/career-recommendation-system/blob/main/README.md",
+      "https://github.com/lakshithlokesh06/career-recommendation-system/blob/main/predictor.py",
+      "https://github.com/lakshithlokesh06/career-recommendation-system/blob/main/train_model.py",
+      "https://github.com/lakshithlokesh06/career-recommendation-system/blob/main/requirements.txt"
+    ],
+    "notes": "Reviewed public README, requirements.txt, predictor.py, and train_model.py. The estimator is CountVectorizer plus MultinomialNB. Skill-impact statements use matching rules, not the SHAP package. The current prediction function requires a configured Groq API key."
+  },
+  "demoUrl": "https://ai-career-recommendation-system.streamlit.app/"
+}

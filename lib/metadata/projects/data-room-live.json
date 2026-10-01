@@ -1,0 +1,112 @@
+{
+  "id": "data-room-live",
+  "slug": "data-room-live",
+  "name": "DataRoom Live",
+  "description": "Collaborative CSV quality review with workspace permissions, explainable detectors, assignments, comments, and activity history.",
+  "summary": "Teams inspect dataset profiles and treat automated findings as review signals. Workspace permissions, assignments, comments, and issue activity support shared decisions about data quality.",
+  "domainIds": [
+    "full-stack",
+    "data-analytics"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/data-room-live",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js handles authenticated workspace workflows with Supabase SSR sessions. CSV files remain in private Supabase Storage; csv-parse produces server-side profiles and deterministic quality findings. Supabase PostgreSQL and row-level security protect workspace metadata and review records. No LLM powers detection.",
+  "capabilities": [
+    {
+      "id": "profiling",
+      "name": "CSV profiling",
+      "description": "Validate uploads and inspect types, missingness, uniqueness, and column statistics."
+    },
+    {
+      "id": "review",
+      "name": "Collaborative review",
+      "description": "Assign issues, comment, change resolution status, and inspect activity history."
+    },
+    {
+      "id": "access",
+      "name": "Workspace access",
+      "description": "Apply authenticated owner, admin, member, and viewer permissions."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Workspace application",
+      "usage": "App Router pages and server operations coordinate dataset review and sensitive mutations.",
+      "capabilityIds": [
+        "profiling",
+        "review",
+        "access"
+      ]
+    },
+    {
+      "technologyId": "react",
+      "section": "Frontend",
+      "role": "Review interactions",
+      "usage": "Reusable components display issues, assignments, comments, and dataset details.",
+      "capabilityIds": [
+        "review"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed review contracts",
+      "usage": "TypeScript describes CSV profiles, detector findings, and workspace records.",
+      "capabilityIds": [
+        "profiling",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "supabase",
+      "section": "Infrastructure",
+      "role": "Auth, storage, and data platform",
+      "usage": "Supabase Auth manages sessions; private Storage holds CSVs and RLS restricts workspace tables.",
+      "capabilityIds": [
+        "access",
+        "profiling"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Review metadata",
+      "usage": "Supabase PostgreSQL stores column profiles, issues, comments, and workspace activity.",
+      "capabilityIds": [
+        "review",
+        "access"
+      ]
+    },
+    {
+      "technologyId": "csv-parse",
+      "section": "Backend",
+      "role": "Server CSV parsing",
+      "usage": "csv-parse reads validated uploads for profiling and deterministic detectors.",
+      "capabilityIds": [
+        "profiling"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "nextjs",
+      "targetTechnologyId": "supabase",
+      "description": "Server-side sessions authorize workspace operations and uploads."
+    },
+    {
+      "sourceTechnologyId": "csv-parse",
+      "targetTechnologyId": "postgres",
+      "description": "Computed profiles and issue metadata are persisted; raw CSVs stay in Storage."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/data-room-live/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

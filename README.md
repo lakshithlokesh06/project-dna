@@ -1,6 +1,6 @@
 # Project DNA
 
-A restrained, responsive foundation for an atlas of software projects.
+A responsive technical atlas of real software repositories, built with Next.js App Router, TypeScript, Tailwind CSS v4, and Framer Motion.
 
 ## Development
 
@@ -9,27 +9,15 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. `npm run lint` checks the source and `npm run build` creates a production build.
+Open http://localhost:3000. Run `npm run lint`, `npm run test:metadata`, and `npm run build` before releasing. `npm start` serves the production build.
 
 ## Structure
 
-- `app/`: landing page, global design tokens, and metadata
-- `components/`: navigation, identity, animated constellation, and section headings
-- `lib/data.ts`: explicitly illustrative project, technology, and metric content
+- `lib/metadata/`: canonical project records, technology/category registries, validation, and derived atlas
+- `lib/explore/`: deterministic graph layout, scope filtering, and shared lookup/URL helpers
+- `components/`: identity, navigation, interactive network, stack DNA, and section headings
+- `app/`: landing page, Explore, project detail routes, and global design tokens
 
-Built with Next.js App Router, TypeScript, Tailwind CSS v4, and Framer Motion. Navigation uses real page anchors; concept previews are intentionally informational. Project details and graph relationships share one illustrative metadata source; no backend is implemented. The decorative constellation respects reduced motion. System fonts avoid external font requests.
+The landing page, `/explore`, and `/projects/[slug]` share the same validated metadata. Each project page includes its stack, exact technology roles, capabilities, architecture, repository/demo links, status, year, source scope, and collection navigation. Technology links use `/explore?technology=<id>` to highlight their connected projects. Unknown technology IDs safely fall back to normal exploration; unknown projects show a dedicated not-found view.
 
-## Interactive atlas
-
-`/explore` renders a deterministic, responsive bipartite network. Project nodes use square markers; technologies use circular markers. Pointer hover and keyboard focus trace direct relationships, and selecting a technology opens its metadata and related projects. Project nodes link to dedicated project pages. Escape closes details. On phones, the details panel sits below the graph.
-
-`lib/explore/model.ts` owns typed projects, technologies, domains, relationships, validation, and the layout adapter. `lib/explore/dataset.ts` supplies illustrative metadata without coordinates. `components/explore/network.tsx` accepts any `AtlasData` dataset. Add unique stable IDs and relationships to expand the atlas; domains are metadata shown in project details, rather than additional graph nodes. The two-column layout grows vertically with the dataset and avoids physics simulation. For large future datasets, introduce filtering or a different layout adapter.
-
-
-## Project DNA detail pages
-
-`/projects/[slug]` statically generates pages for the canonical projects in `lib/explore/dataset.ts`, with metadata and a project-specific 404 for unknown slugs. The page template renders six stack sections, architecture connections, project capabilities, and collection navigation. `components/projects/stack-dna.tsx` renders the stack as a linked DNA sequence; no ratings or percentages are inferred.
-
-Project records include a unique slug, architecture narrative, explicit technology connections, and capabilities. Each `uses` relationship records a section, role, exact usage, and project-scoped capability IDs. `validateAtlas` checks IDs, slugs, and references when the dataset loads. `lib/explore/selectors.ts` provides shared lookup and URL helpers. Landing previews derive from this same source.
-
-Technology links use `/explore?technology=<id>` to open a selected technology and highlight its connections. Unknown technology query IDs safely show the normal atlas. Previous / Next navigation follows dataset order, with explicit beginning and end states. All implementation descriptions and capabilities belong to illustrative sample projects, not actual repositories.
+See [metadata documentation](docs/metadata.md) for the record contract, initial collection, verification scope, and extension workflow. Metadata is curated at build time; there is no live GitHub synchronization or application backend.

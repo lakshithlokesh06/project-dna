@@ -1,0 +1,158 @@
+{
+  "id": "ai-news-credibility-platform",
+  "slug": "ai-news-credibility-platform",
+  "name": "News Credibility AI",
+  "description": "Train, explain, monitor, and review news credibility classifiers with explicit human evidence workflows.",
+  "summary": "A model operations and review workspace for labeled news datasets. Training runs, champion selection, explanations, and human-entered evidence are kept distinct; predictions do not establish factual truth.",
+  "domainIds": [
+    "nlp-ai",
+    "data-science"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/ai-news-credibility-platform",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js calls FastAPI services for dataset ingestion, training, experiments, inference, monitoring, and human review. PostgreSQL stores records while vectorizers and trained models remain filesystem artifacts. Predictions describe learned patterns; reviewer-entered evidence is not automatically fact-checked.",
+  "capabilities": [
+    {
+      "id": "experiments",
+      "name": "Classifier experiments",
+      "description": "Train TF-IDF baselines, compare stored metrics, and select a champion explicitly."
+    },
+    {
+      "id": "analysis",
+      "name": "Explained predictions",
+      "description": "Analyze articles, save prediction history, and inspect model feature attribution."
+    },
+    {
+      "id": "review",
+      "name": "Review and monitoring",
+      "description": "Record human labels, manual claims and evidence, and inspect drift diagnostics."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Model operations UI",
+      "usage": "Pages expose experiments, article analysis, evidence review, and monitoring.",
+      "capabilityIds": [
+        "experiments",
+        "analysis",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed API models",
+      "usage": "Typed requests and responses describe model runs and review records.",
+      "capabilityIds": [
+        "analysis",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "ML and review API",
+      "usage": "Bounded endpoints manage datasets, training, champion selection, and human review.",
+      "capabilityIds": [
+        "experiments",
+        "analysis",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "ML services",
+      "usage": "Python services manage artifacts, model lifecycle, and monitoring profiles.",
+      "capabilityIds": [
+        "experiments",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Classical NLP models",
+      "usage": "TF-IDF feeds Logistic Regression and calibrated Linear SVM pipelines.",
+      "capabilityIds": [
+        "experiments",
+        "analysis"
+      ]
+    },
+    {
+      "technologyId": "transformers",
+      "section": "Data / AI",
+      "role": "Transformer classifier path",
+      "usage": "Lazy-loaded DistilBERT training and inference provide an alternative to classical models.",
+      "capabilityIds": [
+        "experiments",
+        "analysis"
+      ]
+    },
+    {
+      "technologyId": "pytorch",
+      "section": "Data / AI",
+      "role": "Transformer runtime",
+      "usage": "PyTorch runs the optional DistilBERT training and inference path.",
+      "capabilityIds": [
+        "experiments",
+        "analysis"
+      ]
+    },
+    {
+      "technologyId": "shap",
+      "section": "Data / AI",
+      "role": "Feature attribution",
+      "usage": "SHAP outputs explain model behavior rather than proving factual claims.",
+      "capabilityIds": [
+        "analysis"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Review records",
+      "usage": "Relational storage retains articles, experiments, evidence, reviews, and monitoring profiles.",
+      "capabilityIds": [
+        "review",
+        "experiments"
+      ]
+    },
+    {
+      "technologyId": "docker",
+      "section": "Infrastructure",
+      "role": "Local platform environment",
+      "usage": "Docker Compose configures application and database services.",
+      "capabilityIds": [
+        "experiments"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "fastapi",
+      "targetTechnologyId": "scikit-learn",
+      "description": "Training services build and persist TF-IDF classifier pipelines."
+    },
+    {
+      "sourceTechnologyId": "transformers",
+      "targetTechnologyId": "pytorch",
+      "description": "DistilBERT executes through the PyTorch model runtime."
+    },
+    {
+      "sourceTechnologyId": "fastapi",
+      "targetTechnologyId": "postgres",
+      "description": "Review and experiment endpoints persist structured records."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/ai-news-credibility-platform/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

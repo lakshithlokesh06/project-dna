@@ -1,0 +1,115 @@
+{
+  "id": "ecommerce-analytics-dashboard",
+  "slug": "ecommerce-analytics-dashboard",
+  "name": "Commerce Data Insights",
+  "description": "Interactive sales analytics and model-based monthly revenue forecasting with SQLite persistence.",
+  "summary": "Cleaned order data supports revenue, product, region, and time-based analysis. A separate forecasting workflow compares regressors and exports predictions and evaluation results.",
+  "domainIds": [
+    "data-analytics",
+    "data-science"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/ecommerce-analytics-dashboard",
+  "year": 2026,
+  "status": "available",
+  "architecture": "CSV uploads pass through cleaning into SQLite. Streamlit analytics pages use Pandas for revenue, product, and regional summaries. Scikit-learn compares Random Forest, Gradient Boosting, and Linear Regression before producing forecasts and exportable results.",
+  "capabilities": [
+    {
+      "id": "analytics",
+      "name": "Commerce analytics",
+      "description": "Inspect revenue, products, regions, trends, and filtered KPI summaries."
+    },
+    {
+      "id": "forecasts",
+      "name": "Revenue forecasting",
+      "description": "Train and evaluate three regressors, then export future monthly predictions."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Analytics and forecasting pages",
+      "usage": "Multipage views guide uploads, filters, model training, and CSV downloads.",
+      "capabilityIds": [
+        "analytics",
+        "forecasts"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Analytics modules",
+      "usage": "Python separates loading, database, analytics, and forecasting responsibilities.",
+      "capabilityIds": [
+        "analytics",
+        "forecasts"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Commerce preparation",
+      "usage": "DataFrames clean order data and aggregate revenue by period, product, and region.",
+      "capabilityIds": [
+        "analytics"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Feature calculations",
+      "usage": "Numerical operations support feature engineering and regression calculations.",
+      "capabilityIds": [
+        "forecasts"
+      ]
+    },
+    {
+      "technologyId": "sqlite",
+      "section": "Data / AI",
+      "role": "Persistent sales storage",
+      "usage": "Cleaned sales records are stored locally for analytics and forecasting.",
+      "capabilityIds": [
+        "analytics"
+      ]
+    },
+    {
+      "technologyId": "plotly",
+      "section": "Frontend",
+      "role": "Interactive commerce charts",
+      "usage": "Charts expose KPI trends, product and regional performance, and forecast diagnostics.",
+      "capabilityIds": [
+        "analytics",
+        "forecasts"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Forecast model comparison",
+      "usage": "Three regressors are trained and compared using MAE, RMSE, and R-squared.",
+      "capabilityIds": [
+        "forecasts"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "sqlite",
+      "description": "Validated and cleaned order records are persisted locally."
+    },
+    {
+      "sourceTechnologyId": "scikit-learn",
+      "targetTechnologyId": "plotly",
+      "description": "Model diagnostics and forecasts appear as interactive figures."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/ecommerce-analytics-dashboard/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  },
+  "demoUrl": "https://commerce-data-insights.streamlit.app/"
+}

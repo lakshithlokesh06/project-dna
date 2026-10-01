@@ -1,0 +1,124 @@
+{
+  "id": "job-market-analytics-portal",
+  "slug": "job-market-analytics-portal",
+  "name": "Job Market Analytics Portal",
+  "description": "A searchable job market workspace with skills, salary trends, saved searches, and application tracking.",
+  "summary": "An interconnected view of job listings, in-demand skills, salaries, and market trends. Saved searches and application tracking extend the analytics into a personal job-search workflow.",
+  "domainIds": [
+    "data-analytics",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/job-market-analytics-portal",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Flask routes render HTML templates and expose job-market workflows. Flask-SQLAlchemy accesses PostgreSQL records. JavaScript and Chart.js present interactive dashboards styled with Tailwind CSS.",
+  "capabilities": [
+    {
+      "id": "discovery",
+      "name": "Job exploration",
+      "description": "Search and filter job listings and inspect individual roles."
+    },
+    {
+      "id": "insights",
+      "name": "Market insights",
+      "description": "Explore in-demand skills, salaries, and market trends."
+    },
+    {
+      "id": "tracking",
+      "name": "Search and application tracking",
+      "description": "Save searches and manage job applications."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "flask",
+      "section": "Backend",
+      "role": "Portal routes",
+      "usage": "Flask serves dashboards, job details, saved searches, and application routes.",
+      "capabilityIds": [
+        "discovery",
+        "tracking"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Market analysis services",
+      "usage": "Python queries and aggregates job records for skill and trend analysis.",
+      "capabilityIds": [
+        "insights"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Database access",
+      "usage": "Flask-SQLAlchemy maps and queries persisted job and application records.",
+      "capabilityIds": [
+        "discovery",
+        "tracking"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Job data store",
+      "usage": "PostgreSQL stores seeded listings and application workspace data.",
+      "capabilityIds": [
+        "discovery",
+        "tracking"
+      ]
+    },
+    {
+      "technologyId": "javascript",
+      "section": "Frontend",
+      "role": "Dashboard interactions",
+      "usage": "JavaScript connects filters and interactive chart presentation in rendered pages.",
+      "capabilityIds": [
+        "insights"
+      ]
+    },
+    {
+      "technologyId": "chartjs",
+      "section": "Frontend",
+      "role": "Market charts",
+      "usage": "Chart.js visualizes salary and skill analytics within dashboard pages.",
+      "capabilityIds": [
+        "insights"
+      ]
+    },
+    {
+      "technologyId": "tailwind",
+      "section": "Frontend",
+      "role": "Portal layout",
+      "usage": "Tailwind utilities style responsive templates and controls.",
+      "capabilityIds": [
+        "discovery"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "flask",
+      "targetTechnologyId": "sqlalchemy",
+      "description": "Portal routes query job and application models."
+    },
+    {
+      "sourceTechnologyId": "sqlalchemy",
+      "targetTechnologyId": "postgres",
+      "description": "ORM queries read and update relational records."
+    },
+    {
+      "sourceTechnologyId": "javascript",
+      "targetTechnologyId": "chartjs",
+      "description": "Browser interactions render market statistics as charts."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/job-market-analytics-portal/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "id": "student-feedback-emotion-analysis",
+  "slug": "student-feedback-emotion-analysis",
+  "name": "Student Feedback Emotion Analysis",
+  "description": "Local emotion classification with contextual analytics, labeled evaluation, human review, and monitoring.",
+  "summary": "A pinned English model classifies feedback locally. Labeled evaluation, annotation queues, and reference/current monitoring help inspect model outputs without treating them as evidence of a student\u2019s mental state.",
+  "domainIds": [
+    "nlp-ai"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/student-feedback-emotion-analysis",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Streamlit manages dataset intake, evaluation, annotation, and monitoring snapshots. A pinned Hugging Face DistilRoBERTa model executes locally on CPU through Transformers/PyTorch. Pandas prepares and aggregates results; Plotly visualizes contextual trends. Human review does not retrain the model.",
+  "capabilities": [
+    {
+      "id": "classification",
+      "name": "Emotion classification",
+      "description": "Batch-classify usable English feedback into seven labels with low-confidence flags."
+    },
+    {
+      "id": "evaluation",
+      "name": "Labeled evaluation",
+      "description": "Inspect supplied-label accuracy, F1, confusion matrices, errors, and ambiguity."
+    },
+    {
+      "id": "review",
+      "name": "Human review and monitoring",
+      "description": "Annotate results, export curated records, and compare reference/current snapshots."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Emotion workspace",
+      "usage": "Separate pages coordinate analysis, evaluation, annotations, and monitoring state.",
+      "capabilityIds": [
+        "classification",
+        "evaluation",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Workflow modules",
+      "usage": "Python modules validate uploads and orchestrate independent analysis and monitoring snapshots.",
+      "capabilityIds": [
+        "classification",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "transformers",
+      "section": "Data / AI",
+      "role": "Pinned emotion classifier",
+      "usage": "Transformers loads j-hartmann/emotion-english-distilroberta-base at a fixed revision for batched classification.",
+      "capabilityIds": [
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "pytorch",
+      "section": "Data / AI",
+      "role": "CPU inference",
+      "usage": "PyTorch runs the pretrained model locally rather than sending feedback to hosted inference.",
+      "capabilityIds": [
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Feedback preparation",
+      "usage": "DataFrames preserve original rows and support context summaries, annotations, and exports.",
+      "capabilityIds": [
+        "review"
+      ]
+    },
+    {
+      "technologyId": "plotly",
+      "section": "Frontend",
+      "role": "Evaluation and trend charts",
+      "usage": "Interactive figures show emotion distributions, contextual patterns, and monitoring comparisons.",
+      "capabilityIds": [
+        "evaluation",
+        "review"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Evaluation metrics",
+      "usage": "Metrics compare predicted emotion labels with supplied reference labels.",
+      "capabilityIds": [
+        "evaluation"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "transformers",
+      "targetTechnologyId": "pytorch",
+      "description": "The pinned classifier runs through the local CPU runtime."
+    },
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "plotly",
+      "description": "Prepared emotion results and snapshot summaries feed charts."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/student-feedback-emotion-analysis/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

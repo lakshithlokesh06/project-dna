@@ -1,0 +1,114 @@
+{
+  "id": "student-score-predictor",
+  "slug": "student-score-predictor",
+  "name": "Student Score Predictor",
+  "description": "Academic performance prediction with model comparisons, SHAP explanations, and improvement suggestions.",
+  "summary": "Study and lifestyle inputs feed a model trained on synthetic data. Feature contributions provide explanation context and suggestions, while the app keeps prediction history for comparison.",
+  "domainIds": [
+    "data-science"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/student-score-predictor",
+  "year": 2026,
+  "status": "available",
+  "architecture": "A Streamlit form supplies study and lifestyle features to a persisted model pipeline. The repository compares regression candidates and selects Linear Regression. SHAP contributions inform explanations and suggestions; session history preserves prior predictions. Training data is synthetic.",
+  "capabilities": [
+    {
+      "id": "prediction",
+      "name": "Score prediction",
+      "description": "Estimate a performance index and grade from study and lifestyle inputs."
+    },
+    {
+      "id": "explanations",
+      "name": "Prediction explanations",
+      "description": "Show model feature contributions and related improvement suggestions."
+    },
+    {
+      "id": "history",
+      "name": "Prediction history",
+      "description": "Inspect previous inputs and predicted scores in the app."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Prediction interface",
+      "usage": "Sliders and result panels expose inputs, scores, contributions, and history.",
+      "capabilityIds": [
+        "prediction",
+        "explanations",
+        "history"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Prediction workflow",
+      "usage": "Python loads persisted model artifacts and constructs explanations and suggestions.",
+      "capabilityIds": [
+        "prediction",
+        "explanations"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Training and feature data",
+      "usage": "DataFrames prepare student features and support exploratory analysis.",
+      "capabilityIds": [
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Numerical inputs",
+      "usage": "Numerical arrays support model feature preparation and calculations.",
+      "capabilityIds": [
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Regression pipeline",
+      "usage": "Linear Regression is the documented selected estimator after candidate comparison.",
+      "capabilityIds": [
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "xgboost",
+      "section": "Data / AI",
+      "role": "Candidate model evaluation",
+      "usage": "XGBoost is an evaluated candidate, not the documented selected prediction model.",
+      "capabilityIds": [
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "shap",
+      "section": "Data / AI",
+      "role": "Model contributions",
+      "usage": "SHAP explains feature contributions used by result explanations and suggestions.",
+      "capabilityIds": [
+        "explanations"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "scikit-learn",
+      "targetTechnologyId": "shap",
+      "description": "The selected prediction model is inspected through feature contributions."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/student-score-predictor/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  },
+  "demoUrl": "https://academic-score-ai.streamlit.app"
+}

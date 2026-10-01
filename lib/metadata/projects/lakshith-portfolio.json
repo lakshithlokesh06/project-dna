@@ -1,0 +1,89 @@
+{
+  "id": "lakshith-portfolio",
+  "slug": "lakshith-portfolio",
+  "name": "Lakshith Portfolio",
+  "description": "A professional portfolio with project case studies, real repository links, resume integration, and SEO metadata.",
+  "summary": "A professional presentation of data science, analytics, and development work. Featured case studies connect to repository and demo links, with resume access and search metadata built into the web experience.",
+  "domainIds": [
+    "portfolio-web"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/lakshith-portfolio",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js App Router renders portfolio sections and project case studies. React/TypeScript supply typed reusable components, Tailwind styles responsive layouts, and Framer Motion animates transitions.",
+  "capabilities": [
+    {
+      "id": "showcase",
+      "name": "Project case studies",
+      "description": "Present featured work with repository and documented demo links."
+    },
+    {
+      "id": "navigation",
+      "name": "Responsive portfolio",
+      "description": "Provide mobile navigation, resume access, and search metadata."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Portfolio routes",
+      "usage": "App Router pages render the portfolio, case studies, sitemap, and metadata.",
+      "capabilityIds": [
+        "showcase",
+        "navigation"
+      ]
+    },
+    {
+      "technologyId": "react",
+      "section": "Frontend",
+      "role": "Portfolio components",
+      "usage": "Reusable components compose professional sections and responsive navigation.",
+      "capabilityIds": [
+        "navigation"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed portfolio content",
+      "usage": "TypeScript defines content contracts for project and portfolio views.",
+      "capabilityIds": [
+        "showcase"
+      ]
+    },
+    {
+      "technologyId": "tailwind",
+      "section": "Frontend",
+      "role": "Responsive visual system",
+      "usage": "Tailwind provides the portfolio layout and styling utilities.",
+      "capabilityIds": [
+        "navigation"
+      ]
+    },
+    {
+      "technologyId": "framer-motion",
+      "section": "Frontend",
+      "role": "Interface motion",
+      "usage": "Framer Motion provides section and interface transitions.",
+      "capabilityIds": [
+        "navigation"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "nextjs",
+      "targetTechnologyId": "react",
+      "description": "Portfolio routes compose reusable section components."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/lakshith-portfolio/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  },
+  "demoUrl": "https://lakshith-portfolio.vercel.app"
+}

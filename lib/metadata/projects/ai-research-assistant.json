@@ -1,0 +1,178 @@
+{
+  "id": "ai-research-assistant",
+  "slug": "ai-research-assistant",
+  "name": "AI Research Assistant",
+  "description": "A document-grounded research workspace with semantic search, cited answers, paper analysis, and multi-paper comparison.",
+  "summary": "A user-owned PDF library connects document preparation to retrieval-grounded research. Saved sessions, paper reports, and comparisons retain citations so the supporting text can be inspected.",
+  "domainIds": [
+    "nlp-ai",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/ai-research-assistant",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js calls a modular FastAPI backend. PyMuPDF extracts page text; document services chunk it and an embedding provider indexes it in PostgreSQL with pgvector. OpenAI and LangGraph support grounded research workflows with saved steps and citation snapshots. Report export and OCR remain planned.",
+  "capabilities": [
+    {
+      "id": "documents",
+      "name": "PDF library",
+      "description": "Upload, extract, chunk, index, and manage user-owned papers."
+    },
+    {
+      "id": "research",
+      "name": "Grounded research",
+      "description": "Answer questions and save sessions with page-level citations."
+    },
+    {
+      "id": "comparison",
+      "name": "Paper comparison",
+      "description": "Generate structured single-paper analysis and compare two to five indexed papers."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Research workspace",
+      "usage": "App Router pages expose the document library, research history, paper reports, and comparison workspace.",
+      "capabilityIds": [
+        "documents",
+        "research",
+        "comparison"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Research contracts",
+      "usage": "Typed frontend models describe documents, citations, and research responses.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "Research API",
+      "usage": "Authenticated routes manage owned documents, indexing, sessions, and analyses.",
+      "capabilityIds": [
+        "documents",
+        "research",
+        "comparison"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Document and research services",
+      "usage": "Python services coordinate extraction, chunking, retrieval, and grounded reporting.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    },
+    {
+      "technologyId": "pymupdf",
+      "section": "Data / AI",
+      "role": "PDF text extraction",
+      "usage": "Page-by-page extraction preserves page attribution for document chunks and citations.",
+      "capabilityIds": [
+        "documents"
+      ]
+    },
+    {
+      "technologyId": "pgvector",
+      "section": "Data / AI",
+      "role": "Semantic retrieval",
+      "usage": "The PostgreSQL vector extension stores chunk embeddings and supports similarity search.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Research persistence",
+      "usage": "The database stores user-owned documents, chunks, sessions, and analysis records.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    },
+    {
+      "technologyId": "openai",
+      "section": "Data / AI",
+      "role": "Embeddings and answers",
+      "usage": "Provider abstractions use OpenAI embeddings and the Responses API for cited answers when configured.",
+      "capabilityIds": [
+        "research",
+        "comparison"
+      ]
+    },
+    {
+      "technologyId": "langgraph",
+      "section": "Data / AI",
+      "role": "Research workflow",
+      "usage": "LangGraph coordinates research steps with persisted step and citation snapshots.",
+      "capabilityIds": [
+        "research",
+        "comparison"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Document models",
+      "usage": "ORM repositories enforce data access for research and document records.",
+      "capabilityIds": [
+        "documents"
+      ]
+    },
+    {
+      "technologyId": "docker",
+      "section": "Infrastructure",
+      "role": "Vector database service",
+      "usage": "Compose provisions a PostgreSQL image with the pgvector extension.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    },
+    {
+      "technologyId": "pytest",
+      "section": "Testing",
+      "role": "Service regression tests",
+      "usage": "Backend tests exercise ownership, document processing, and research workflows.",
+      "capabilityIds": [
+        "documents",
+        "research"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pymupdf",
+      "targetTechnologyId": "pgvector",
+      "description": "Extracted text is chunked, embedded, and indexed for retrieval."
+    },
+    {
+      "sourceTechnologyId": "pgvector",
+      "targetTechnologyId": "openai",
+      "description": "Retrieved paper context grounds model-generated answers."
+    },
+    {
+      "sourceTechnologyId": "langgraph",
+      "targetTechnologyId": "postgres",
+      "description": "Workflow steps and citation snapshots are persisted."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/ai-research-assistant/blob/main/README.md"
+    ],
+    "notes": "Reviewed the local ai-research-assistant checkout README and dependency manifests, with its configured GitHub origin. The repository was not returned by the public inventory; access may require authentication. Year uses the local repository history. Report export, OCR, and external academic search remain planned."
+  }
+}

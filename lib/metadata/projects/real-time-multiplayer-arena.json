@@ -1,0 +1,143 @@
+{
+  "id": "real-time-multiplayer-arena",
+  "slug": "real-time-multiplayer-arena",
+  "name": "Real-Time Multiplayer Arena",
+  "description": "A server-authoritative arena with live rooms, combat, matchmaking, persistent results, and Elo ratings.",
+  "summary": "Players can join manual rooms or enter rated matchmaking. The server owns simulation and final results, while clients predict and reconcile movement and recover after temporary disconnections.",
+  "domainIds": [
+    "games-cv",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/Real-Time-Multiplayer-Arena",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js hosts the lobby and match UI while Phaser renders the arena. Express and Socket.IO run authenticated rooms and authoritative game simulation. Redis stores live room and queue state; Prisma persists match history and rating changes to PostgreSQL at lifecycle boundaries.",
+  "capabilities": [
+    {
+      "id": "combat",
+      "name": "Authoritative combat",
+      "description": "Server-owned movement, projectile collisions, health, scores, and match completion."
+    },
+    {
+      "id": "matchmaking",
+      "name": "Matchmaking and recovery",
+      "description": "Match compatible players and recover queued or active sessions after refresh."
+    },
+    {
+      "id": "history",
+      "name": "Match history and ratings",
+      "description": "Persist results and apply atomic Elo updates for rated matches."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Lobby and match pages",
+      "usage": "Pages expose registration, rooms, matchmaking, results, and match history.",
+      "capabilityIds": [
+        "matchmaking",
+        "history"
+      ]
+    },
+    {
+      "technologyId": "phaser",
+      "section": "Frontend",
+      "role": "Arena renderer",
+      "usage": "Phaser renders the 2D arena, players, projectiles, camera, and HUD.",
+      "capabilityIds": [
+        "combat"
+      ]
+    },
+    {
+      "technologyId": "express",
+      "section": "Backend",
+      "role": "Game HTTP server",
+      "usage": "Express serves authentication and game-service endpoints.",
+      "capabilityIds": [
+        "matchmaking",
+        "history"
+      ]
+    },
+    {
+      "technologyId": "nodejs",
+      "section": "Backend",
+      "role": "Authoritative simulation",
+      "usage": "Node.js runs server-owned movement, combat ticks, and lifecycle services.",
+      "capabilityIds": [
+        "combat"
+      ]
+    },
+    {
+      "technologyId": "socketio",
+      "section": "Backend",
+      "role": "Realtime transport",
+      "usage": "Authenticated Socket.IO connections send player intents and authoritative snapshots.",
+      "capabilityIds": [
+        "combat",
+        "matchmaking"
+      ]
+    },
+    {
+      "technologyId": "redis",
+      "section": "Data / AI",
+      "role": "Room and queue state",
+      "usage": "Redis coordinates live rooms, queue membership, matchmaking, and recovery state.",
+      "capabilityIds": [
+        "matchmaking"
+      ]
+    },
+    {
+      "technologyId": "prisma",
+      "section": "Backend",
+      "role": "Match persistence",
+      "usage": "Prisma writes completed matches and applies idempotent rated-match updates.",
+      "capabilityIds": [
+        "history"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Player and match records",
+      "usage": "PostgreSQL persists authenticated player records, match results, and MMR history.",
+      "capabilityIds": [
+        "history"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Shared game contracts",
+      "usage": "Shared TypeScript modules define networking payloads and game-domain types.",
+      "capabilityIds": [
+        "combat",
+        "matchmaking"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "phaser",
+      "targetTechnologyId": "socketio",
+      "description": "The client sends input intent and reconciles server snapshots."
+    },
+    {
+      "sourceTechnologyId": "nodejs",
+      "targetTechnologyId": "redis",
+      "description": "Room and matchmaking services maintain live state."
+    },
+    {
+      "sourceTechnologyId": "prisma",
+      "targetTechnologyId": "postgres",
+      "description": "Match finalization persists standings and rating deltas."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/Real-Time-Multiplayer-Arena/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

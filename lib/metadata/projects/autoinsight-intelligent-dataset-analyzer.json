@@ -1,0 +1,120 @@
+{
+  "id": "autoinsight-intelligent-dataset-analyzer",
+  "slug": "autoinsight-intelligent-dataset-analyzer",
+  "name": "AutoInsight",
+  "description": "Automated CSV profiling, data-quality analysis, interactive visualizations, and downloadable reports.",
+  "summary": "Upload a CSV, inspect its quality and patterns, then export an analysis report. The application helps establish a starting point for modeling through transparent readiness and task recommendations.",
+  "domainIds": [
+    "data-analytics",
+    "data-science"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/AutoInsight-Intelligent-Dataset-Analyzer",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Streamlit coordinates uploaded datasets and dedicated loading, statistics, quality, visualization, recommendation, and report modules. Pandas holds the working data, Plotly renders charts, and ReportLab creates PDF reports. Recommendations assess ML readiness; they are not an LLM service. The implemented ML recommendation module uses Pandas and deterministic heuristics rather than training scikit-learn models.",
+  "capabilities": [
+    {
+      "id": "profile",
+      "name": "Dataset profiling",
+      "description": "Inspect shape, types, missing values, duplicates, and outliers."
+    },
+    {
+      "id": "charts",
+      "name": "Visual exploration",
+      "description": "Explore distributions and relationships using interactive charts."
+    },
+    {
+      "id": "reports",
+      "name": "Analysis reports",
+      "description": "Generate PDF summaries and export analysis results."
+    },
+    {
+      "id": "readiness",
+      "name": "ML readiness guidance",
+      "description": "Suggest target columns and model tasks from dataset characteristics."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Analysis workspace",
+      "usage": "Widgets, session state, and caching guide uploads, quality analysis, settings, and exports.",
+      "capabilityIds": [
+        "profile",
+        "charts",
+        "reports"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Analysis pipeline",
+      "usage": "Modular Python utilities coordinate statistics, quality rules, transparent ML task/readiness heuristics, and report generation.",
+      "capabilityIds": [
+        "profile",
+        "reports",
+        "readiness"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Dataset profiling",
+      "usage": "DataFrames support column summaries, missing-value checks, duplicates, and correlations.",
+      "capabilityIds": [
+        "profile",
+        "readiness"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Numerical summaries",
+      "usage": "Numerical operations support statistical summaries and outlier analysis.",
+      "capabilityIds": [
+        "profile"
+      ]
+    },
+    {
+      "technologyId": "plotly",
+      "section": "Frontend",
+      "role": "Interactive figures",
+      "usage": "Histograms, scatter plots, box plots, and heatmaps reveal distributions and correlations.",
+      "capabilityIds": [
+        "charts"
+      ]
+    },
+    {
+      "technologyId": "reportlab",
+      "section": "Backend",
+      "role": "PDF reports",
+      "usage": "Report generation assembles statistics and quality findings into multi-page PDF documents.",
+      "capabilityIds": [
+        "reports"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "plotly",
+      "description": "Prepared dataset summaries feed interactive visualizations."
+    },
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "reportlab",
+      "description": "Statistical and quality summaries populate exported reports."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/AutoInsight-Intelligent-Dataset-Analyzer/blob/main/README.md",
+      "https://github.com/lakshithlokesh06/AutoInsight-Intelligent-Dataset-Analyzer/blob/main/requirements.txt",
+      "https://github.com/lakshithlokesh06/AutoInsight-Intelligent-Dataset-Analyzer/blob/main/utils/ml_recommendation_engine.py"
+    ],
+    "notes": "Reviewed public README, runtime manifest, and ml_recommendation_engine.py. The README lists scikit-learn, but the runtime manifest and recommendation module implement heuristic guidance without that dependency, so it is excluded. Excel input and LLM-generated insights remain roadmap items."
+  },
+  "demoUrl": "https://autoinsight-analytics.streamlit.app/"
+}

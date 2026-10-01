@@ -1,0 +1,156 @@
+{
+  "id": "ai-visual-intelligence-platform",
+  "slug": "ai-visual-intelligence-platform",
+  "name": "AI Visual Intelligence",
+  "description": "An image-analysis workspace for detection, classification, Grad-CAM explanations, and batch processing.",
+  "summary": "Validated image uploads feed separate detection and classification providers. Persisted run history, visual explanations, analytics, and batch jobs make the inference workflow explorable beyond a single prediction.",
+  "domainIds": [
+    "games-cv",
+    "data-science"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/ai-visual-intelligence-platform",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js dashboards call FastAPI services with provider-isolated computer vision logic. Ultralytics runs detection; TorchVision runs classification on PyTorch. PostgreSQL stores run metadata while validated uploads, annotations, and explanation overlays live in local storage.",
+  "capabilities": [
+    {
+      "id": "detection",
+      "name": "Object detection",
+      "description": "Upload validated images and inspect saved YOLO detections and annotations."
+    },
+    {
+      "id": "classification",
+      "name": "Explained classification",
+      "description": "Inspect Top-K ImageNet predictions and on-demand Grad-CAM overlays."
+    },
+    {
+      "id": "batches",
+      "name": "Batch analysis",
+      "description": "Process multiple images with item-level status and partial failure handling."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Visual workspace",
+      "usage": "Frontend pages expose image uploads, analysis history, analytics, and batch jobs.",
+      "capabilityIds": [
+        "detection",
+        "classification",
+        "batches"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "Analysis API",
+      "usage": "Routes validate uploads and coordinate detection, classification, and explanation services.",
+      "capabilityIds": [
+        "detection",
+        "classification",
+        "batches"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Provider integration",
+      "usage": "Python separates orchestration, persistence, and inference-provider responsibilities.",
+      "capabilityIds": [
+        "detection",
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "ultralytics",
+      "section": "Data / AI",
+      "role": "YOLO detection",
+      "usage": "Ultralytics pretrained YOLO models produce detections and annotated images.",
+      "capabilityIds": [
+        "detection"
+      ]
+    },
+    {
+      "technologyId": "pytorch",
+      "section": "Data / AI",
+      "role": "Model runtime",
+      "usage": "PyTorch executes classification models and gradients for Grad-CAM explanations.",
+      "capabilityIds": [
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "torchvision",
+      "section": "Data / AI",
+      "role": "ImageNet classifiers",
+      "usage": "TorchVision providers return Top-K predictions using configured pretrained models.",
+      "capabilityIds": [
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "opencv",
+      "section": "Data / AI",
+      "role": "Image processing",
+      "usage": "OpenCV supports image-processing operations around analysis outputs.",
+      "capabilityIds": [
+        "detection",
+        "classification"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Analysis metadata",
+      "usage": "Persisted image and run records support history, analytics, and batch status.",
+      "capabilityIds": [
+        "batches",
+        "detection"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Run repositories",
+      "usage": "ORM repositories store and query image-analysis records.",
+      "capabilityIds": [
+        "detection",
+        "batches"
+      ]
+    },
+    {
+      "technologyId": "docker",
+      "section": "Infrastructure",
+      "role": "Local database environment",
+      "usage": "Compose starts the PostgreSQL service used by backend repositories.",
+      "capabilityIds": [
+        "detection"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "fastapi",
+      "targetTechnologyId": "ultralytics",
+      "description": "Analysis services invoke the detection provider."
+    },
+    {
+      "sourceTechnologyId": "torchvision",
+      "targetTechnologyId": "pytorch",
+      "description": "Configured classifier architectures execute on PyTorch."
+    },
+    {
+      "sourceTechnologyId": "sqlalchemy",
+      "targetTechnologyId": "postgres",
+      "description": "Analysis history and job status are persisted."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/ai-visual-intelligence-platform/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

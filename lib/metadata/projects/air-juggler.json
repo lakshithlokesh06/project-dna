@@ -1,0 +1,90 @@
+{
+  "id": "air-juggler",
+  "slug": "air-juggler",
+  "name": "Air Juggler",
+  "description": "A webcam-controlled browser game where tracked fingertips keep a ball in the air.",
+  "summary": "Move a tracked fingertip beneath a falling ball to bounce it. Difficulty modes, a timed challenge, pause controls, camera cleanup, and local personal bests complete the browser game loop.",
+  "domainIds": [
+    "games-cv"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/air-juggler",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Browser JavaScript owns camera acquisition, hand tracking, canvas rendering, and round state. TensorFlow.js executes the hand-landmark model; fingertip position drives bounce detection. Personal bests remain in local browser storage, with no backend or accounts.",
+  "capabilities": [
+    {
+      "id": "tracking",
+      "name": "Live hand tracking",
+      "description": "Track one hand and its index fingertip through the webcam."
+    },
+    {
+      "id": "game",
+      "name": "Juggling modes",
+      "description": "Play three lives-based difficulties or a timed challenge with progressive levels."
+    },
+    {
+      "id": "controls",
+      "name": "Accessible game controls",
+      "description": "Pause, resume, stop, mute sounds, and release the camera through named controls."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "javascript",
+      "section": "Frontend",
+      "role": "Game loop and controls",
+      "usage": "JavaScript coordinates round state, countdowns, gravity, collisions, and camera cleanup.",
+      "capabilityIds": [
+        "game",
+        "controls"
+      ]
+    },
+    {
+      "technologyId": "tensorflowjs",
+      "section": "Data / AI",
+      "role": "Hand landmark inference",
+      "usage": "TensorFlow.js performs in-browser inference for tracked hand landmarks.",
+      "capabilityIds": [
+        "tracking"
+      ]
+    },
+    {
+      "technologyId": "canvas",
+      "section": "Frontend",
+      "role": "Game and tracking overlay",
+      "usage": "Canvas draws ball movement and hand landmark feedback over the camera preview.",
+      "capabilityIds": [
+        "tracking",
+        "game"
+      ]
+    },
+    {
+      "technologyId": "html-css",
+      "section": "Frontend",
+      "role": "Game interface",
+      "usage": "Semantic controls, responsive CSS, and reduced-motion styles support the game shell.",
+      "capabilityIds": [
+        "controls"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "tensorflowjs",
+      "targetTechnologyId": "javascript",
+      "description": "Fingertip landmarks feed bounce detection in the game loop."
+    },
+    {
+      "sourceTechnologyId": "javascript",
+      "targetTechnologyId": "canvas",
+      "description": "Round state is drawn as an animated game overlay."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/air-juggler/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

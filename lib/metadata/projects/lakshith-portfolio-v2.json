@@ -1,0 +1,95 @@
+{
+  "id": "lakshith-portfolio-v2",
+  "slug": "lakshith-portfolio-v2",
+  "name": "Interactive Data Lab",
+  "description": "An interactive portfolio with a data constellation, project observatory, technical journey, and six case studies.",
+  "summary": "An interactive data-lab direction for the portfolio: connected concepts, project exploration, technical journey, and capability context. The homepage and case-study phases are implemented; final production polish remains.",
+  "domainIds": [
+    "portfolio-web"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/lakshith-portfolio-v2",
+  "year": 2026,
+  "status": "in-development",
+  "architecture": "Next.js server components render portfolio content. Small client components handle constellation selection, project expansion, and capability filters. Typed content records drive the sections, and Framer Motion supports restrained transitions that respect reduced motion.",
+  "capabilities": [
+    {
+      "id": "constellation",
+      "name": "Data constellation",
+      "description": "Explore connected concepts with selection, keyboard controls, and contextual detail."
+    },
+    {
+      "id": "observatory",
+      "name": "Project observatory",
+      "description": "Explore six featured projects and their technical case studies."
+    },
+    {
+      "id": "journey",
+      "name": "Technical journey",
+      "description": "Browse educational and capability context through reusable portfolio sections."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Portfolio composition",
+      "usage": "Server-rendered routes provide the homepage and six technical case studies.",
+      "capabilityIds": [
+        "observatory",
+        "journey"
+      ]
+    },
+    {
+      "technologyId": "react",
+      "section": "Frontend",
+      "role": "Exploration components",
+      "usage": "Client components handle node selection, project expansion, and capability filtering.",
+      "capabilityIds": [
+        "constellation",
+        "observatory"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Content contracts",
+      "usage": "Typed content models define constellation relationships and portfolio records.",
+      "capabilityIds": [
+        "constellation",
+        "observatory"
+      ]
+    },
+    {
+      "technologyId": "tailwind",
+      "section": "Frontend",
+      "role": "Editorial design tokens",
+      "usage": "Tailwind theme utilities support responsive graphite and cyan layouts.",
+      "capabilityIds": [
+        "journey"
+      ]
+    },
+    {
+      "technologyId": "framer-motion",
+      "section": "Frontend",
+      "role": "Reduced-motion transitions",
+      "usage": "Framer Motion provides restrained one-time interface transitions.",
+      "capabilityIds": [
+        "constellation"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "nextjs",
+      "targetTechnologyId": "react",
+      "description": "Server-rendered portfolio sections embed focused client interactions."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/lakshith-portfolio-v2/blob/main/README.md"
+    ],
+    "notes": "README explicitly states that the homepage phases and case studies are complete but final production polish remains."
+  }
+}

@@ -1,0 +1,179 @@
+{
+  "id": "customer-churn-analytics-platform",
+  "slug": "customer-churn-analytics-platform",
+  "name": "Customer Churn Analytics",
+  "description": "An end-to-end churn workspace for data quality, segmentation, prediction, explainability, and retention analysis.",
+  "summary": "A customer analytics workflow spanning ingestion, profiling, model training, and retention investigation. Customer 360 combines available model, cohort, segment, and explanation outputs around individual customer records.",
+  "domainIds": [
+    "data-science",
+    "data-analytics"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/customer-churn-analytics-platform",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js dashboards call versioned FastAPI routes. Services ingest customer CSVs, persist rows and run metadata through SQLAlchemy/PostgreSQL, and manage model artifacts. Scikit-learn and XGBoost power training; SHAP explains model drivers. Deterministic demo data supports local evaluation.",
+  "capabilities": [
+    {
+      "id": "quality",
+      "name": "Customer data profiling",
+      "description": "Ingest CSVs and inspect quality, target normalization, and cleaning previews."
+    },
+    {
+      "id": "modeling",
+      "name": "Churn modeling",
+      "description": "Train and compare models, score customers, and inspect customer-level explanations."
+    },
+    {
+      "id": "retention",
+      "name": "Retention workspace",
+      "description": "Combine segments, cohorts, prioritization, retention recommendations, and monitoring."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Customer workspace",
+      "usage": "Dashboard pages expose analytics, Customer Explorer, and Customer 360 workflows.",
+      "capabilityIds": [
+        "quality",
+        "modeling",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed dashboard data",
+      "usage": "Frontend types align customer data and API response structures.",
+      "capabilityIds": [
+        "quality",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "Versioned analytics API",
+      "usage": "Routes expose ingestion, training, prediction, segmentation, and monitoring services.",
+      "capabilityIds": [
+        "quality",
+        "modeling",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Analytics orchestration",
+      "usage": "Python services implement customer profiling, feature processing, and business rules.",
+      "capabilityIds": [
+        "quality",
+        "modeling",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Customer feature preparation",
+      "usage": "DataFrames support schema inference, customer analytics, and model feature preparation.",
+      "capabilityIds": [
+        "quality",
+        "modeling"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Model and segmentation pipeline",
+      "usage": "Candidate churn models and clustering workflows fit customer features and evaluate results.",
+      "capabilityIds": [
+        "modeling",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "xgboost",
+      "section": "Data / AI",
+      "role": "Boosted churn candidates",
+      "usage": "XGBoost provides a candidate estimator in the churn training workflow.",
+      "capabilityIds": [
+        "modeling"
+      ]
+    },
+    {
+      "technologyId": "shap",
+      "section": "Data / AI",
+      "role": "Churn explanations",
+      "usage": "Global and per-customer SHAP outputs expose model feature contributions.",
+      "capabilityIds": [
+        "modeling"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Persistence layer",
+      "usage": "SQLAlchemy models persist dataset rows and analytics-run metadata.",
+      "capabilityIds": [
+        "quality",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Customer records",
+      "usage": "PostgreSQL stores uploaded records and the application workflow state.",
+      "capabilityIds": [
+        "quality",
+        "retention"
+      ]
+    },
+    {
+      "technologyId": "docker",
+      "section": "Infrastructure",
+      "role": "Local platform stack",
+      "usage": "Compose runs PostgreSQL, the FastAPI backend, and the frontend together.",
+      "capabilityIds": [
+        "quality",
+        "modeling"
+      ]
+    },
+    {
+      "technologyId": "pytest",
+      "section": "Testing",
+      "role": "Backend checks",
+      "usage": "Backend tests cover analytics services and explicit business logic.",
+      "capabilityIds": [
+        "modeling",
+        "retention"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "nextjs",
+      "targetTechnologyId": "fastapi",
+      "description": "Dashboard requests invoke the analytics and model APIs."
+    },
+    {
+      "sourceTechnologyId": "scikit-learn",
+      "targetTechnologyId": "shap",
+      "description": "Fitted model behavior is inspected through feature explanations."
+    },
+    {
+      "sourceTechnologyId": "sqlalchemy",
+      "targetTechnologyId": "postgres",
+      "description": "Dataset and run records live in relational storage."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/customer-churn-analytics-platform/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

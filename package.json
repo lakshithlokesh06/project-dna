@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:metadata": "tsc --module commonjs --moduleResolution node --target ES2020 --esModuleInterop --resolveJsonModule --skipLibCheck --rootDir lib --outDir .metadata-test lib/metadata/index.ts lib/explore/filter.ts && node --test tests/metadata.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",

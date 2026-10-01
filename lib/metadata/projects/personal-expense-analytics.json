@@ -1,0 +1,116 @@
+{
+  "id": "personal-expense-analytics",
+  "slug": "personal-expense-analytics",
+  "name": "Personal Expense Analytics",
+  "description": "Local expense exploration with strict CSV validation, keyword categories, budgets, and explainable spending insights.",
+  "summary": "A local-first dashboard for understandable transaction exploration and budget comparisons. Explicit keyword rules preserve reviewability; refunds are included in calculations and uploaded data is not persisted.",
+  "domainIds": [
+    "data-analytics"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/personal-expense-analytics",
+  "year": 2026,
+  "status": "available",
+  "architecture": "A Streamlit entry point coordinates independent loading, categorization, calculations, UI, and budget modules. Pandas/NumPy aggregate validated records; Altair charts render results. Uploads and budgets stay in process/session memory, with no database or ML service.",
+  "capabilities": [
+    {
+      "id": "expenses",
+      "name": "Expense exploration",
+      "description": "Filter validated transactions and inspect totals, category trends, and ranked expenses."
+    },
+    {
+      "id": "budgets",
+      "name": "Monthly budgets",
+      "description": "Compare month and category limits with actual spending, including refunds."
+    },
+    {
+      "id": "rules",
+      "name": "Transparent categorization",
+      "description": "Review ordered keyword matches before replacing existing categories."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Expense workspace",
+      "usage": "Widgets manage dataset selection, filters, categorization review, and session budgets.",
+      "capabilityIds": [
+        "expenses",
+        "budgets",
+        "rules"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Calculation modules",
+      "usage": "Pure Python modules implement budget comparisons and keyword rules independently of the UI.",
+      "capabilityIds": [
+        "budgets",
+        "rules"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Transaction aggregation",
+      "usage": "DataFrames validate uploaded rows and compute date/category summaries without discarding refunds.",
+      "capabilityIds": [
+        "expenses",
+        "budgets"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Numeric validation",
+      "usage": "NumPy supports numeric checks and aggregation calculations.",
+      "capabilityIds": [
+        "expenses"
+      ]
+    },
+    {
+      "technologyId": "altair",
+      "section": "Frontend",
+      "role": "Expense charts",
+      "usage": "Interactive charts show spending trends and category comparisons with hover, pan, and zoom.",
+      "capabilityIds": [
+        "expenses"
+      ]
+    },
+    {
+      "technologyId": "unittest",
+      "section": "Testing",
+      "role": "Calculation and app tests",
+      "usage": "unittest and Streamlit AppTest cover validation, calculations, and app regressions.",
+      "capabilityIds": [
+        "expenses",
+        "budgets",
+        "rules"
+      ]
+    },
+    {
+      "technologyId": "github-actions",
+      "section": "Tooling",
+      "role": "Continuous quality checks",
+      "usage": "Repository workflows run automated checks for the analytics modules.",
+      "capabilityIds": [
+        "expenses"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "altair",
+      "description": "Filtered transaction summaries feed interactive expense charts."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/personal-expense-analytics/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

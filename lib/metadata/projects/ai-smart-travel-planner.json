@@ -1,0 +1,182 @@
+{
+  "id": "ai-smart-travel-planner",
+  "slug": "ai-smart-travel-planner",
+  "name": "AI Smart Travel Planner",
+  "description": "Personalized itineraries through a multi-agent workflow, with saved trips, authentication, and PDF export.",
+  "summary": "A complete planning workflow takes travelers from preferences to saved, printable itineraries. Specialized agents organize the planning tasks, while authentication and persistent trip management support returning users.",
+  "domainIds": [
+    "nlp-ai",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/AI-Smart-Travel-Planner",
+  "year": 2026,
+  "status": "available",
+  "architecture": "A Next.js client sends planning preferences to FastAPI. LangGraph coordinates specialized planning agents using OpenAI, while SQLAlchemy persists user-owned trips in PostgreSQL. ReportLab produces downloadable itineraries. Live travel provider integrations are optional.",
+  "capabilities": [
+    {
+      "id": "planning",
+      "name": "Multi-agent planning",
+      "description": "Combine destination, dates, budget, and interests into a structured itinerary."
+    },
+    {
+      "id": "trips",
+      "name": "Saved trips",
+      "description": "Authenticate users and save, rename, duplicate, and share their trips."
+    },
+    {
+      "id": "export",
+      "name": "PDF export",
+      "description": "Generate printable itinerary documents."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Planning application",
+      "usage": "App Router pages provide the planning form, trip results, and saved-trip workspace.",
+      "capabilityIds": [
+        "planning",
+        "trips"
+      ]
+    },
+    {
+      "technologyId": "react",
+      "section": "Frontend",
+      "role": "Interactive trip UI",
+      "usage": "React components coordinate preference inputs and itinerary display.",
+      "capabilityIds": [
+        "planning"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed UI contracts",
+      "usage": "TypeScript defines request payloads and trip data for frontend modules.",
+      "capabilityIds": [
+        "planning",
+        "trips"
+      ]
+    },
+    {
+      "technologyId": "tailwind",
+      "section": "Frontend",
+      "role": "Responsive styling",
+      "usage": "Utility styles support responsive planning forms and itinerary views.",
+      "capabilityIds": [
+        "planning"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "Trip API",
+      "usage": "HTTP routes expose planning, authentication, saved trips, and export operations.",
+      "capabilityIds": [
+        "planning",
+        "trips",
+        "export"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Planning services",
+      "usage": "Python implements itinerary services, persistence integration, and document generation.",
+      "capabilityIds": [
+        "planning",
+        "export"
+      ]
+    },
+    {
+      "technologyId": "langgraph",
+      "section": "Data / AI",
+      "role": "Agent orchestration",
+      "usage": "A graph runs specialized flight, hotel, weather, activity, budget, and itinerary steps.",
+      "capabilityIds": [
+        "planning"
+      ]
+    },
+    {
+      "technologyId": "openai",
+      "section": "Data / AI",
+      "role": "Planning model provider",
+      "usage": "The OpenAI SDK supplies model responses when AI mode is configured; fallback mode remains available.",
+      "capabilityIds": [
+        "planning"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Trip persistence models",
+      "usage": "ORM models and sessions store users and saved itinerary records.",
+      "capabilityIds": [
+        "trips"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Application database",
+      "usage": "PostgreSQL persists accounts, trips, and shared-trip data.",
+      "capabilityIds": [
+        "trips"
+      ]
+    },
+    {
+      "technologyId": "reportlab",
+      "section": "Backend",
+      "role": "Itinerary documents",
+      "usage": "ReportLab renders trip information into downloadable PDF files.",
+      "capabilityIds": [
+        "export"
+      ]
+    },
+    {
+      "technologyId": "docker",
+      "section": "Infrastructure",
+      "role": "Local service environment",
+      "usage": "Docker Compose coordinates frontend, backend, and database development services.",
+      "capabilityIds": [
+        "planning",
+        "trips"
+      ]
+    },
+    {
+      "technologyId": "pytest",
+      "section": "Testing",
+      "role": "Backend regression checks",
+      "usage": "Backend tests mock AI providers to exercise services without paid API calls.",
+      "capabilityIds": [
+        "planning",
+        "trips"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "nextjs",
+      "targetTechnologyId": "fastapi",
+      "description": "Planning preferences travel from the frontend to the versioned backend."
+    },
+    {
+      "sourceTechnologyId": "fastapi",
+      "targetTechnologyId": "langgraph",
+      "description": "The planning endpoint executes the specialized-agent workflow."
+    },
+    {
+      "sourceTechnologyId": "sqlalchemy",
+      "targetTechnologyId": "postgres",
+      "description": "Trip models are persisted through database sessions."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/AI-Smart-Travel-Planner/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

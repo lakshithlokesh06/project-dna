@@ -1,0 +1,120 @@
+{
+  "id": "customer-feedback-sentiment-intelligence",
+  "slug": "customer-feedback-sentiment-intelligence",
+  "name": "Customer Feedback Sentiment",
+  "description": "Offline sentiment analysis and review exploration for customer feedback CSVs.",
+  "summary": "A CSV review workflow keeps unusable text visible while excluding it from sentiment aggregates. Offline scoring, metadata-aware analytics, text insights, and filtered exports support traceable feedback exploration.",
+  "domainIds": [
+    "nlp-ai",
+    "data-analytics"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/customer-feedback-sentiment-intelligence",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Streamlit coordinates CSV preparation and session-based analysis. VADER scores usable review text locally using its bundled lexicon. Pandas aggregates sentiment and metadata, while Plotly charts expose patterns. Review search and CSV exports operate on session results without a database.",
+  "capabilities": [
+    {
+      "id": "sentiment",
+      "name": "Offline sentiment scoring",
+      "description": "Label usable reviews Positive, Neutral, or Negative with compound and component scores."
+    },
+    {
+      "id": "analytics",
+      "name": "Sentiment analytics",
+      "description": "Explore sentiment distributions, date trends, keywords, and rating comparisons."
+    },
+    {
+      "id": "explorer",
+      "name": "Review explorer",
+      "description": "Search, filter, sort, paginate, and export review results."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Feedback workspace",
+      "usage": "Session state shares validated data and analysis across overview, analytics, and exploration pages.",
+      "capabilityIds": [
+        "sentiment",
+        "analytics",
+        "explorer"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Review processing",
+      "usage": "Python modules manage strict CSV intake, quality checks, and in-memory exports.",
+      "capabilityIds": [
+        "explorer"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Review summaries",
+      "usage": "DataFrames preserve source rows and calculate sentiment and metadata summaries.",
+      "capabilityIds": [
+        "analytics",
+        "explorer"
+      ]
+    },
+    {
+      "technologyId": "vader",
+      "section": "Data / AI",
+      "role": "Lexicon scoring",
+      "usage": "The bundled VADER lexicon scores review text offline; component scores are not confidence probabilities.",
+      "capabilityIds": [
+        "sentiment"
+      ]
+    },
+    {
+      "technologyId": "plotly",
+      "section": "Frontend",
+      "role": "Sentiment charts",
+      "usage": "Interactive figures expose distributions, trends, mentions, and category comparisons.",
+      "capabilityIds": [
+        "analytics"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Text insight stopwords",
+      "usage": "The bundled English stopword list filters terms for keyword and phrase frequency analysis; no classifier is trained.",
+      "capabilityIds": [
+        "analytics"
+      ]
+    },
+    {
+      "technologyId": "pytest",
+      "section": "Testing",
+      "role": "Feedback regression tests",
+      "usage": "Tests exercise intake, sentiment workflows, and application regression behavior.",
+      "capabilityIds": [
+        "sentiment",
+        "explorer"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "vader",
+      "targetTechnologyId": "pandas",
+      "description": "Sentiment scores become row-level results and aggregate summaries."
+    },
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "plotly",
+      "description": "Prepared sentiment aggregates drive visual analytics."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/customer-feedback-sentiment-intelligence/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}

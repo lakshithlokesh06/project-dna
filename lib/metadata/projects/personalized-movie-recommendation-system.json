@@ -1,0 +1,141 @@
+{
+  "id": "personalized-movie-recommendation-system",
+  "slug": "personalized-movie-recommendation-system",
+  "name": "Movie Recommendation & Discovery",
+  "description": "Personalized movie discovery with explainable hybrid recommendations, ratings, preferences, and offline evaluation.",
+  "summary": "Content and collaborative signals are combined with explicit user preferences. Discovery tools, explanation cards, and offline benchmarks make recommendation behavior inspectable, including cold-start conditions.",
+  "domainIds": [
+    "data-science",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/personalized-movie-recommendation-system",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Next.js presents discovery and recommendation pages backed by FastAPI. PostgreSQL stores catalog, user ratings, and preferences. Persisted TF-IDF and bias-centered TruncatedSVD artifacts feed adaptive hybrid ranking; offline evaluation measures ranking quality and coverage.",
+  "capabilities": [
+    {
+      "id": "recommendations",
+      "name": "Hybrid recommendations",
+      "description": "Combine content similarity, collaborative signals, preferences, and cold-start handling."
+    },
+    {
+      "id": "discovery",
+      "name": "Movie discovery",
+      "description": "Search and filter a catalog, rate movies, and manage preferences."
+    },
+    {
+      "id": "evaluation",
+      "name": "Offline evaluation",
+      "description": "Compare ranking, rating, coverage, diversity, and popularity diagnostics."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nextjs",
+      "section": "Frontend",
+      "role": "Discovery UI",
+      "usage": "Pages provide searchable catalog views, preferences, recommendation cards, and analytics.",
+      "capabilityIds": [
+        "recommendations",
+        "discovery"
+      ]
+    },
+    {
+      "technologyId": "typescript",
+      "section": "Tooling",
+      "role": "Typed client",
+      "usage": "Shared client types describe movie records and recommendation explanations.",
+      "capabilityIds": [
+        "discovery"
+      ]
+    },
+    {
+      "technologyId": "fastapi",
+      "section": "Backend",
+      "role": "Recommendation API",
+      "usage": "Services expose ratings, discovery, personalized ranking, and analytics.",
+      "capabilityIds": [
+        "recommendations",
+        "discovery",
+        "evaluation"
+      ]
+    },
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Ranking orchestration",
+      "usage": "Python assembles content and collaborative candidates with adaptive scoring.",
+      "capabilityIds": [
+        "recommendations"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Content and collaborative models",
+      "usage": "TF-IDF vectorizes movie metadata; bias-centered TruncatedSVD models sparse ratings.",
+      "capabilityIds": [
+        "recommendations",
+        "evaluation"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Ranking calculations",
+      "usage": "Numerical operations support score combination and evaluation diagnostics.",
+      "capabilityIds": [
+        "recommendations",
+        "evaluation"
+      ]
+    },
+    {
+      "technologyId": "sqlalchemy",
+      "section": "Backend",
+      "role": "Catalog and user repositories",
+      "usage": "ORM repositories access movies, ratings, and preference profiles.",
+      "capabilityIds": [
+        "discovery"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Data / AI",
+      "role": "Catalog persistence",
+      "usage": "The database persists MovieLens catalog records and application-user interactions.",
+      "capabilityIds": [
+        "discovery",
+        "recommendations"
+      ]
+    },
+    {
+      "technologyId": "pytest",
+      "section": "Testing",
+      "role": "Recommendation checks",
+      "usage": "Backend tests check ranking, API behavior, and artifact validation.",
+      "capabilityIds": [
+        "recommendations",
+        "evaluation"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "fastapi",
+      "targetTechnologyId": "scikit-learn",
+      "description": "Recommendation services load persisted content and collaborative artifacts."
+    },
+    {
+      "sourceTechnologyId": "sqlalchemy",
+      "targetTechnologyId": "postgres",
+      "description": "Movie and user interactions are stored relationally."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/personalized-movie-recommendation-system/blob/main/README.md"
+    ],
+    "notes": "Reviewed repository README and available dependency manifests. Capabilities describe implemented workflows; roadmap items are excluded."
+  }
+}
