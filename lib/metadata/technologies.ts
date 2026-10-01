@@ -1,5 +1,11 @@
 import type { Technology } from './model';
 export const technologies: Technology[] = [
+  { id: 'pdfplumber', name: 'pdfplumber', category: 'Library', description: 'PDF page inspection and text extraction.' },
+  { id: 'python-docx', name: 'python-docx', category: 'Library', description: 'Reading and writing Word document paragraphs and tables.' },
+  { id: 'matplotlib', name: 'Matplotlib', category: 'Graphics', description: 'Python charts and scientific visualizations.' },
+  { id: 'bcryptjs', name: 'bcryptjs', category: 'Library', description: 'JavaScript bcrypt password hashing and verification.' },
+  { id: 'jsonwebtoken', name: 'jsonwebtoken', category: 'Library', description: 'Signing and verifying JSON Web Tokens in Node.js.' },
+
   { id: 'joblib', name: 'Joblib', category: 'Library', description: 'Persisting and loading Python model artifacts.' },
   { id: 'nextjs', name: 'Next.js', category: 'Framework', description: 'React application routing, rendering, and server composition.' },
   { id: 'react', name: 'React', category: 'Framework', description: 'Composable, state-driven web interfaces.' },

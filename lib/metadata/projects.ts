@@ -19,6 +19,11 @@ import project16 from './projects/student-score-predictor.json';
 import project17 from './projects/lakshith-portfolio.json';
 import project18 from './projects/lakshith-portfolio-v2.json';
 
+import project19 from './projects/house-price-prediction-web-app.json';
+import project20 from './projects/ai-resume-analyzer.json';
+import project21 from './projects/student-performance-visualization.json';
+import project22 from './projects/pcl-6.json';
+
 // JSON is validated at startup and build time, before it reaches any page.
 export const projectRecords = [
   project0,
@@ -39,5 +44,9 @@ export const projectRecords = [
   project15,
   project16,
   project17,
-  project18
+  project18,
+  project19,
+  project20,
+  project21,
+  project22
 ] as unknown as ProjectRecord[];

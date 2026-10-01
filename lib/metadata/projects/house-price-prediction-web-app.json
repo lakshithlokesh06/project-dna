@@ -1,0 +1,129 @@
+{
+  "id": "house-price-prediction-web-app",
+  "slug": "house-price-prediction-web-app",
+  "name": "House Price Prediction",
+  "description": "Residential price estimation with validated property inputs and a persisted regression pipeline.",
+  "summary": "Property attributes pass through the same imputation and categorical encoding used in training. Linear Regression and Random Forest are compared before the best pipeline is saved.",
+  "domainIds": [
+    "data-science",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/house-price-prediction-web-app",
+  "year": 2026,
+  "status": "available",
+  "architecture": "A training script splits housing data into training and test sets, fits preprocessing and regression pipelines, compares R\u00b2, MAE, and RMSE, and persists the selected pipeline with feature metadata. Flask loads these artifacts at startup, validates submitted property fields, and renders the predicted price and input summary.",
+  "capabilities": [
+    {
+      "id": "training",
+      "name": "Model comparison",
+      "description": "Compare Linear Regression and Random Forest using held-out regression metrics."
+    },
+    {
+      "id": "prediction",
+      "name": "Property price estimation",
+      "description": "Validate numeric and categorical property inputs and predict through persisted preprocessing."
+    },
+    {
+      "id": "results",
+      "name": "Prediction presentation",
+      "description": "Show a formatted rupee estimate alongside the submitted property attributes."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Training and inference orchestration",
+      "usage": "Loads artifacts, validates form values, and coordinates model training and prediction.",
+      "capabilityIds": [
+        "training",
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "flask",
+      "section": "Backend",
+      "role": "Prediction web routes",
+      "usage": "Serves the property form and POST /predict, returning field errors with HTTP 400 or a result page.",
+      "capabilityIds": [
+        "prediction",
+        "results"
+      ]
+    },
+    {
+      "technologyId": "html-css",
+      "section": "Frontend",
+      "role": "Property forms and results",
+      "usage": "Templates and CSS present property fields, validation feedback, and formatted price results.",
+      "capabilityIds": [
+        "prediction",
+        "results"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Housing feature tables",
+      "usage": "Reads the housing CSV and builds inference DataFrames in the saved feature-column order.",
+      "capabilityIds": [
+        "training",
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "numpy",
+      "section": "Data / AI",
+      "role": "Regression metric calculation",
+      "usage": "Computes the square root of mean squared error for reported RMSE.",
+      "capabilityIds": [
+        "training"
+      ]
+    },
+    {
+      "technologyId": "scikit-learn",
+      "section": "Data / AI",
+      "role": "Persisted regression pipeline",
+      "usage": "ColumnTransformer applies median and categorical imputation plus OneHotEncoder; Pipeline compares LinearRegression and RandomForestRegressor.",
+      "capabilityIds": [
+        "training",
+        "prediction"
+      ]
+    },
+    {
+      "technologyId": "joblib",
+      "section": "Tooling",
+      "role": "Model artifact persistence",
+      "usage": "Saves and loads the selected model pipeline and its fitted preprocessor.",
+      "capabilityIds": [
+        "training",
+        "prediction"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "scikit-learn",
+      "description": "Housing tables supply training features and ordered inference inputs."
+    },
+    {
+      "sourceTechnologyId": "joblib",
+      "targetTechnologyId": "scikit-learn",
+      "description": "Persisted pipelines retain fitted preprocessing for prediction."
+    },
+    {
+      "sourceTechnologyId": "flask",
+      "targetTechnologyId": "scikit-learn",
+      "description": "Validated property submissions are passed to the loaded pipeline."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/house-price-prediction-web-app/blob/main/app.py",
+      "https://github.com/lakshithlokesh06/house-price-prediction-web-app/blob/main/model_training.py",
+      "https://github.com/lakshithlokesh06/house-price-prediction-web-app/blob/main/README.md"
+    ],
+    "notes": "Reviewed implementation files and repository structure during the repository audit. Only implemented behavior is recorded; availability does not imply production readiness."
+  }
+}

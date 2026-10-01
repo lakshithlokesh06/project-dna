@@ -1,0 +1,133 @@
+{
+  "id": "pcl-6",
+  "slug": "pcl-6",
+  "name": "FarmLink \u2014 PCL-6 Prototype",
+  "description": "Prototype agricultural marketplace connecting farmers and vendors through crop and product listings.",
+  "summary": "Separate farmer and vendor interfaces connect to an Express API for registration, login, listing creation, browsing, and owner-restricted deletion. Repository setup is incomplete: no database schema or setup guide is included.",
+  "domainIds": [
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/PCL-6",
+  "year": 2026,
+  "status": "prototype",
+  "architecture": "A Node.js/Express server serves static HTML, CSS, and JavaScript interfaces and exposes PostgreSQL-backed authentication and listing endpoints. bcrypt hashes registration passwords; JSON Web Tokens identify users for listing creation and ownership checks on deletion. PostgreSQL is configured through DATABASE_URL. This prototype requires an externally provisioned schema and further security hardening before deployment.",
+  "capabilities": [
+    {
+      "id": "authentication",
+      "name": "Account registration and login",
+      "description": "Hash registration passwords, verify login credentials, and issue bearer tokens."
+    },
+    {
+      "id": "listings",
+      "name": "Crop and product listings",
+      "description": "Browse and create agricultural listings through farmer and vendor interfaces."
+    },
+    {
+      "id": "ownership",
+      "name": "Owner-restricted deletion",
+      "description": "Restrict deletion to listings associated with the authenticated user\u2019s phone number."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "nodejs",
+      "section": "Backend",
+      "role": "JavaScript server runtime",
+      "usage": "Runs the marketplace HTTP server and asynchronous database calls.",
+      "capabilityIds": [
+        "authentication",
+        "listings",
+        "ownership"
+      ]
+    },
+    {
+      "technologyId": "express",
+      "section": "Backend",
+      "role": "Marketplace API and static hosting",
+      "usage": "Serves public interfaces, parses JSON, and exposes authentication, crop, and product endpoints.",
+      "capabilityIds": [
+        "authentication",
+        "listings",
+        "ownership"
+      ]
+    },
+    {
+      "technologyId": "javascript",
+      "section": "Frontend",
+      "role": "Farmer and vendor interactions",
+      "usage": "Browser scripts connect dashboard actions to the marketplace API.",
+      "capabilityIds": [
+        "authentication",
+        "listings",
+        "ownership"
+      ]
+    },
+    {
+      "technologyId": "html-css",
+      "section": "Frontend",
+      "role": "Marketplace pages",
+      "usage": "Provides login, registration, and dedicated farmer/vendor dashboard layouts.",
+      "capabilityIds": [
+        "authentication",
+        "listings"
+      ]
+    },
+    {
+      "technologyId": "postgres",
+      "section": "Infrastructure",
+      "role": "Account and listing persistence",
+      "usage": "The pg connection pool executes parameterized queries against users, crops, and products tables supplied externally.",
+      "capabilityIds": [
+        "authentication",
+        "listings",
+        "ownership"
+      ]
+    },
+    {
+      "technologyId": "bcryptjs",
+      "section": "Backend",
+      "role": "Password hashing",
+      "usage": "Hashes registration passwords with 12 rounds and compares submitted login passwords.",
+      "capabilityIds": [
+        "authentication"
+      ]
+    },
+    {
+      "technologyId": "jsonwebtoken",
+      "section": "Backend",
+      "role": "Bearer-token sessions",
+      "usage": "Signs login tokens and verifies bearer tokens before listing creation and owner-restricted deletion.",
+      "capabilityIds": [
+        "authentication",
+        "ownership"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "express",
+      "targetTechnologyId": "postgres",
+      "description": "Marketplace handlers query persisted accounts and listings."
+    },
+    {
+      "sourceTechnologyId": "express",
+      "targetTechnologyId": "bcryptjs",
+      "description": "Registration and login handlers hash and verify passwords."
+    },
+    {
+      "sourceTechnologyId": "express",
+      "targetTechnologyId": "jsonwebtoken",
+      "description": "Protected listing handlers verify bearer tokens."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/PCL-6/blob/main/server.js",
+      "https://github.com/lakshithlokesh06/PCL-6/blob/main/package.json",
+      "https://github.com/lakshithlokesh06/PCL-6/blob/main/public/js/farmer.js",
+      "https://github.com/lakshithlokesh06/PCL-6/blob/main/public/js/vendor.js"
+    ],
+    "notes": "Reviewed implementation files and repository structure during the repository audit. Only implemented behavior is recorded; availability does not imply production readiness."
+  }
+}

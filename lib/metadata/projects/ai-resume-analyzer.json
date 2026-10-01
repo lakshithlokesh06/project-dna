@@ -1,0 +1,112 @@
+{
+  "id": "ai-resume-analyzer",
+  "slug": "ai-resume-analyzer",
+  "name": "AI Resume Analyzer",
+  "description": "PDF and DOCX resume parsing with rule-based section scoring and Data Analyst skill-gap analysis.",
+  "summary": "Uploaded documents are converted to text, checked for contact details and resume sections, and matched against a fixed Data Analyst skill profile. This implementation uses deterministic rules, not a trained AI model.",
+  "domainIds": [
+    "nlp-ai",
+    "full-stack"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/AI-Resume-Analyzer",
+  "year": 2026,
+  "status": "available",
+  "architecture": "Flask accepts size-limited PDF or DOCX uploads under unique temporary filenames. Dedicated parser modules extract PDF pages or Word paragraphs and tables. Regex-based scoring and skill matching produce section feedback, matched and missing skills, and recommendations. Temporary uploads are removed after processing.",
+  "capabilities": [
+    {
+      "id": "parsing",
+      "name": "Resume text extraction",
+      "description": "Extract readable text from PDF pages and DOCX paragraphs and tables."
+    },
+    {
+      "id": "scoring",
+      "name": "Rule-based resume scoring",
+      "description": "Check contact details, section headings, and content length against a fixed scoring rubric."
+    },
+    {
+      "id": "matching",
+      "name": "Skill-gap assessment",
+      "description": "Match skill aliases against a predefined Data Analyst profile and suggest missing skills."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Document analysis modules",
+      "usage": "Coordinates extraction, regex scoring, skill aliases, result context, and temporary-file cleanup.",
+      "capabilityIds": [
+        "parsing",
+        "scoring",
+        "matching"
+      ]
+    },
+    {
+      "technologyId": "flask",
+      "section": "Backend",
+      "role": "Upload and analysis routes",
+      "usage": "Accepts PDF/DOCX uploads with a 10 MB limit, handles parser errors, and renders analysis results.",
+      "capabilityIds": [
+        "parsing",
+        "scoring",
+        "matching"
+      ]
+    },
+    {
+      "technologyId": "pdfplumber",
+      "section": "Data / AI",
+      "role": "PDF text extraction",
+      "usage": "Reads text from each readable PDF page; scanned PDFs without text require OCR outside this implementation.",
+      "capabilityIds": [
+        "parsing"
+      ]
+    },
+    {
+      "technologyId": "python-docx",
+      "section": "Data / AI",
+      "role": "Word document extraction",
+      "usage": "Reads DOCX paragraphs and table cells into the analysis text.",
+      "capabilityIds": [
+        "parsing"
+      ]
+    },
+    {
+      "technologyId": "html-css",
+      "section": "Frontend",
+      "role": "Resume upload and feedback interface",
+      "usage": "Server-rendered templates present uploaded-file feedback, scores, skill gaps, and extracted text.",
+      "capabilityIds": [
+        "parsing",
+        "scoring",
+        "matching"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "flask",
+      "targetTechnologyId": "pdfplumber",
+      "description": "PDF uploads are sent to the page-text extractor."
+    },
+    {
+      "sourceTechnologyId": "flask",
+      "targetTechnologyId": "python-docx",
+      "description": "DOCX uploads are sent to paragraph and table extraction."
+    },
+    {
+      "sourceTechnologyId": "pdfplumber",
+      "targetTechnologyId": "python",
+      "description": "Extracted text feeds deterministic scoring and skill matching."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/AI-Resume-Analyzer/blob/main/app.py",
+      "https://github.com/lakshithlokesh06/AI-Resume-Analyzer/blob/main/models/resume_parser.py",
+      "https://github.com/lakshithlokesh06/AI-Resume-Analyzer/blob/main/models/scorer.py",
+      "https://github.com/lakshithlokesh06/AI-Resume-Analyzer/blob/main/models/skill_matcher.py"
+    ],
+    "notes": "Reviewed implementation files and repository structure during the repository audit. Only implemented behavior is recorded; availability does not imply production readiness."
+  }
+}

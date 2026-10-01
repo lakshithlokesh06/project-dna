@@ -1,0 +1,102 @@
+{
+  "id": "student-performance-visualization",
+  "slug": "student-performance-visualization",
+  "name": "Student Performance Visualization",
+  "description": "CSV-driven academic analytics with dynamic subject detection, rankings, performance bands, and charts.",
+  "summary": "An uploaded student table is transformed into totals, averages, rankings, and descriptive classroom insights. The dashboard analyzes recorded marks rather than predicting future performance.",
+  "domainIds": [
+    "data-analytics"
+  ],
+  "repositoryUrl": "https://github.com/lakshithlokesh06/student-performance-visualization",
+  "year": 2026,
+  "status": "available",
+  "architecture": "A Streamlit application reads uploaded CSV records into Pandas, detects the student identifier and numeric subject columns, and computes per-student totals, averages, and performance categories. Dedicated dashboard views expose class statistics, ranked records, category filtering, Matplotlib charts, and processed CSV downloads.",
+  "capabilities": [
+    {
+      "id": "processing",
+      "name": "Dynamic dataset processing",
+      "description": "Detect student and numeric subject columns and derive total and average marks."
+    },
+    {
+      "id": "rankings",
+      "name": "Rankings and performance bands",
+      "description": "Rank students by total marks and filter rule-based performance categories."
+    },
+    {
+      "id": "charts",
+      "name": "Classroom visualizations",
+      "description": "Compare student totals and subject averages through descriptive charts."
+    },
+    {
+      "id": "export",
+      "name": "Processed CSV download",
+      "description": "Download the student dataset with calculated performance fields."
+    }
+  ],
+  "stack": [
+    {
+      "technologyId": "python",
+      "section": "Backend",
+      "role": "Analytics workflow",
+      "usage": "Organizes dataset processing and reusable dashboard rendering functions.",
+      "capabilityIds": [
+        "processing",
+        "rankings",
+        "charts",
+        "export"
+      ]
+    },
+    {
+      "technologyId": "streamlit",
+      "section": "Frontend",
+      "role": "Interactive analytics dashboard",
+      "usage": "Provides CSV uploads, navigation, category selection, data tables, chart panels, and downloads.",
+      "capabilityIds": [
+        "processing",
+        "rankings",
+        "charts",
+        "export"
+      ]
+    },
+    {
+      "technologyId": "pandas",
+      "section": "Data / AI",
+      "role": "Student performance transformations",
+      "usage": "Detects numeric columns, computes totals and averages, sorts rankings, filters categories, and serializes CSV output.",
+      "capabilityIds": [
+        "processing",
+        "rankings",
+        "export"
+      ]
+    },
+    {
+      "technologyId": "matplotlib",
+      "section": "Data / AI",
+      "role": "Descriptive classroom charts",
+      "usage": "Creates bar charts for student total marks and subject-wise average marks rendered by Streamlit.",
+      "capabilityIds": [
+        "charts"
+      ]
+    }
+  ],
+  "architectureConnections": [
+    {
+      "sourceTechnologyId": "pandas",
+      "targetTechnologyId": "matplotlib",
+      "description": "Derived student and subject statistics supply the chart data."
+    },
+    {
+      "sourceTechnologyId": "streamlit",
+      "targetTechnologyId": "pandas",
+      "description": "Uploaded CSV data drives tables, rankings, and downloadable results."
+    }
+  ],
+  "evidence": {
+    "reviewedOn": "2026-10-01",
+    "sources": [
+      "https://github.com/lakshithlokesh06/student-performance-visualization/blob/main/app.py",
+      "https://github.com/lakshithlokesh06/student-performance-visualization/blob/main/README.md"
+    ],
+    "notes": "Reviewed implementation files and repository structure during the repository audit. Only implemented behavior is recorded; availability does not imply production readiness."
+  }
+}

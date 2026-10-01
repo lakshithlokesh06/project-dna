@@ -11,7 +11,7 @@ Each record lives in `lib/metadata/projects/<slug>.json`. `lib/metadata/projects
 - `id`, `slug`, `name`, `description`, and `summary`: stable identifiers, a concise description, and a substantive overview.
 - `domainIds`: one or more references to the six curated categories.
 - `repositoryUrl`, optional `demoUrl`: documented HTTP(S) destinations. Repository URLs must identify a GitHub repository. Demo links are documented destinations, not uptime guarantees.
-- `status`: `available` (repository available), `in-development` (explicitly unfinished), or `archived`. Available does not mean production-deployed or under active maintenance.
+- `status`: `available` (repository available), `in-development` (explicitly unfinished), `prototype` (implemented proof of concept), or `archived`. Available does not mean production-deployed or under active maintenance.
 - `year`: repository creation year from the public GitHub API. AI Research Assistant uses local Git history because its repository is absent from the public inventory. This is not necessarily the year work first began.
 - `capabilities`: implemented workflow descriptions with project-scoped IDs.
 - `stack`: technology ID, architectural section, short role, exact project-specific usage, and related capability IDs. Record substantive dependencies; a manifest entry alone does not establish an implemented capability.
@@ -33,3 +33,7 @@ The initial collection includes 19 substantial repositories spanning AI travel p
 `npm run lint` and `npm run build` also validate the complete dataset at module initialization. Broken metadata stops the build before generating project pages. Runtime checks supplement TypeScript because JSON files are externally editable.
 
 Explore initially scopes to one project for larger collections. Its selector exposes all projects and categories; a technology deep link opens its connected-project scope. Each view is derived from the full atlas. Large views scroll within the graph and retain stable positions, pointer highlighting, keyboard access, and reduced-motion behavior.
+
+## Approved audit additions
+
+The collection now contains 23 projects. The four approved additions are House Price Prediction, AI Resume Analyzer (rule-based document analysis), Student Performance Visualization, and FarmLink / PCL-6 (explicitly a prototype). Their records were reviewed against implementation files on 2026-10-01. No excluded audit repositories or Project DNA itself were added.

@@ -6,7 +6,7 @@ export interface Project {
   id: string; slug: string; name: string; description: string; summary: string;
   architecture: string; architectureConnections: ArchitectureConnection[];
   capabilities: Capability[];
-  repositoryUrl: string; demoUrl?: string; status: 'available' | 'in-development' | 'archived'; year: number;
+  repositoryUrl: string; demoUrl?: string; status: 'available' | 'in-development' | 'archived' | 'prototype'; year: number;
   evidence: { reviewedOn: string; sources: string[]; notes: string };
 }
 export interface Technology { id: string; name: string; category: 'Framework' | 'Language' | 'Database' | 'Graphics' | 'Platform' | 'Testing' | 'Automation' | 'Library' | 'Service'; description: string; }
@@ -22,5 +22,5 @@ export interface TechnologyUse {
 }
 export interface ProjectRecord extends Project { domainIds: string[]; stack: TechnologyUse[]; }
 export const projectStatusLabels: Record<Project['status'], string> = {
-  available: 'Repository available', 'in-development': 'In development', archived: 'Archived',
+  prototype: 'Prototype', available: 'Repository available', 'in-development': 'In development', archived: 'Archived',
 };

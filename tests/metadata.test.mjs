@@ -18,7 +18,7 @@ function invalidRecord(mutate, expected) {
   assert.throws(() => buildAtlas(records, technologies, domains), expected);
 }
 test('the repository collection produces complete project-to-technology relationships', () => {
-  assert.ok(atlas.projects.length >= 19);
+  assert.equal(atlas.projects.length, 23);
   assert.ok(['data-science', 'nlp-ai', 'data-analytics', 'full-stack', 'games-cv', 'portfolio-web'].every(id => atlas.domains.some(d => d.id === id)));
   assert.equal(atlas.relationships.filter(r => r.type === 'uses').length, projectRecords.reduce((total,p) => total + p.stack.length, 0));
   assert.ok(atlas.projects.every(p => p.repositoryUrl.startsWith('https://github.com/')));
@@ -68,4 +68,18 @@ test('technology deep-link scope includes every connected project', () => {
   const scoped = scopeAtlas(atlas, 'connected', 'python');
   const expected = atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === 'python').map(r => r.projectId).sort();
   assert.deepEqual(scoped.projects.map(p => p.id).sort(), expected);
+});
+
+test('approved additions appear in project, domain, and technology scopes', () => {
+  const additions = ['house-price-prediction-web-app', 'ai-resume-analyzer', 'student-performance-visualization', 'pcl-6'];
+  for (const id of additions) {
+    const record = projectRecords.find(p => p.id === id);
+    assert.ok(record);
+    assert.equal(atlas.projects.filter(p => p.slug === record.slug).length, 1);
+    validateAtlas(scopeAtlas(atlas, `project:${id}`));
+    for (const domain of record.domainIds) assert.ok(scopeAtlas(atlas, `domain:${domain}`).projects.some(p => p.id === id));
+    for (const use of record.stack) assert.ok(scopeAtlas(atlas, 'connected', use.technologyId).projects.some(p => p.id === id));
+  }
+  assert.equal(projectRecords.find(p => p.id === 'pcl-6').status, 'prototype');
+  assert.ok(!atlas.projects.some(p => p.slug === 'project-dna'));
 });

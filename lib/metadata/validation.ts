@@ -42,7 +42,7 @@ export function validateRecords(records: ProjectRecord[], technologies: Technolo
     url(project.repositoryUrl, `${field}.repositoryUrl`, true);
     if (project.demoUrl !== undefined) url(project.demoUrl, `${field}.demoUrl`);
     if (!Number.isInteger(project.year) || project.year < 1970 || project.year > new Date().getUTCFullYear()) fail(`invalid year in ${field}`);
-    if (!['available','in-development','archived'].includes(project.status)) fail(`invalid status in ${field}`);
+    if (!['available','in-development','archived','prototype'].includes(project.status)) fail(`invalid status in ${field}`);
     list(project.domainIds, `${field}.domainIds`); unique(project.domainIds, `${field} domain reference`);
     if (!project.domainIds.length || project.domainIds.some(id => !domainIds.has(id))) fail(`unknown or missing domain in ${field}`);
     list(project.capabilities, `${field}.capabilities`); unique(project.capabilities.map(c => c.id), `${field} capability ID`);
