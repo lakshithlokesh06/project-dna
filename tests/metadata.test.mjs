@@ -167,3 +167,27 @@ test('domain profiles preserve project counts, technology use and cross-domain e
   assert.equal(represented.size, 23);
   assert.ok(compiledDomainProfiles.searchDomainProjects(atlas.projects, '  house price  ').length > 0);
 });
+
+import compiledGraphView from '../.metadata-test/explore/graph-view.js';
+test('relationship explorer filters, strengths, focus and cluster positions remain metadata-backed', () => {
+  const full = compiledGraphView.relationshipGraph(atlas, { domain: 'all', category: 'all', query: '' });
+  assert.equal(full.nodes.length, atlas.projects.length + atlas.technologies.length);
+  for (const edge of full.edges) {
+    const use = atlas.relationships.find(r => r.id === edge.id);
+    assert.equal(edge.capabilityCount, use.capabilityIds.length);
+    assert.equal(edge.sharedProjectCount, atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === edge.target).length);
+    assert.equal(edge.strength, edge.capabilityCount + edge.sharedProjectCount);
+  }
+  const focused = compiledGraphView.relationshipGraph(atlas, { domain: 'all', category: 'all', query: '', focusId: 'python' });
+  assert.ok(focused.edges.every(edge => edge.target === 'python' || edge.source === 'python'));
+  assert.equal(focused.nodes.length, focused.edges.length + 1);
+  const filtered = compiledGraphView.relationshipGraph(atlas, { domain: 'data-science', category: 'Language', query: 'python' });
+  assert.ok(filtered.edges.length > 0);
+  assert.ok(filtered.nodes.filter(n => n.kind === 'technology').every(n => n.id === 'python'));
+  assert.ok(filtered.nodes.filter(n => n.kind === 'project').every(n => atlas.relationships.some(r => r.type === 'belongs-to' && r.projectId === n.id && r.domainId === 'data-science')));
+  assert.equal(compiledGraphView.relationshipGraph(atlas, { domain: 'all', category: 'all', query: 'no-matching-node-xyz' }).nodes.length, 0);
+  const layout = compiledGraphView.clusterLayout(atlas, full.nodes);
+  assert.equal(layout.positions.size, full.nodes.length);
+  assert.equal(new Set([...layout.positions.values()].map(p => `${p.x}:${p.y}`)).size, full.nodes.length);
+  assert.ok([...layout.positions.values()].every(p => p.x >= 0 && p.x <= layout.width && p.y >= 0 && p.y <= layout.height));
+});
