@@ -147,3 +147,23 @@ test('timeline stages preserve chronological adoption without inventing within-y
   assert.equal(compiledTimeline.filterTimeline(stages, 'missing', 'all').length, 0);
   assert.equal(compiledTimeline.deriveTimeline(atlas).length, 1);
 });
+
+import compiledDomainProfiles from '../.metadata-test/explore/domains.js';
+test('domain profiles preserve project counts, technology use and cross-domain evidence', () => {
+  const profiles = compiledDomainProfiles.domainProfiles(atlas);
+  assert.equal(profiles.length, 6);
+  const represented = new Set();
+  for (const profile of profiles) {
+    const expected = atlas.relationships.filter(r => r.type === 'belongs-to' && r.domainId === profile.domain.id).map(r => r.projectId).sort();
+    assert.deepEqual(profile.projects.map(p => p.id).sort(), expected);
+    profile.projects.forEach(p => represented.add(p.id));
+    for (const item of profile.technologies) {
+      assert.equal(item.projectCount, atlas.relationships.filter(r => r.type === 'uses' && r.technologyId === item.technology.id && expected.includes(r.projectId)).length);
+      assert.ok(item.relatedDomains.every(d => d.id !== profile.domain.id && atlas.relationships.some(r => r.type === 'uses' && r.technologyId === item.technology.id && atlas.relationships.some(b => b.type === 'belongs-to' && b.projectId === r.projectId && b.domainId === d.id))));
+    }
+    assert.equal(profile.capabilities.length, profile.projects.reduce((sum,p) => sum + p.capabilities.length, 0));
+    assert.equal(compiledDomainProfiles.searchDomainProjects(profile.projects, 'unlikely-no-match').length, 0);
+  }
+  assert.equal(represented.size, 23);
+  assert.ok(compiledDomainProfiles.searchDomainProjects(atlas.projects, '  house price  ').length > 0);
+});
