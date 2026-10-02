@@ -1,0 +1,13 @@
+import Link from 'next/link';
+import { ArrowUpRight, Github } from 'lucide-react';
+import type { AtlasData, Project } from '@/lib/explore/model';
+import { projectStatusLabels } from '@/lib/explore/model';
+import { projectSource } from '@/lib/explore/source';
+
+export function SourceActions({ project }: { project: Project }) {
+  return <div className="source-actions"><a href={project.repositoryUrl} target="_blank" rel="noopener noreferrer" aria-label={`View Source for ${project.name} on GitHub (opens in new tab)`}><Github size={13} aria-hidden="true"/>View Source<ArrowUpRight size={12} aria-hidden="true"/></a>{project.demoUrl && <a href={project.demoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open live or demo for ${project.name} (opens in new tab)`}>Live / demo<ArrowUpRight size={12} aria-hidden="true"/></a>}</div>;
+}
+export function SourcePanel({ data, project }: { data: AtlasData; project: Project }) {
+  const source = projectSource(data, project);
+  return <section id="source" className="source-panel" aria-labelledby="source-heading"><div className="source-panel-heading"><div><p className="eyebrow">04 / REPOSITORY & SOURCE</p><h2 id="source-heading">Behind the implementation</h2><p className="source-repository-name">{source.repository}</p></div><SourceActions project={project}/></div><dl className="source-metadata"><div><dt>Repository name</dt><dd>{source.repositoryName}</dd></div><div><dt>Project status</dt><dd>{projectStatusLabels[source.status]}</dd></div><div><dt>Recorded year</dt><dd>{source.year}</dd></div><div><dt>Metadata reviewed</dt><dd><time dateTime={source.reviewedOn}>{source.reviewedOn}</time></dd></div><div><dt>Repository visibility</dt><dd>{source.visibility}</dd></div><div><dt>Live / demo</dt><dd>{source.demoUrl ? 'Link recorded in dataset' : 'No link recorded'}</dd></div></dl><p className="source-scope-note">This is a curated metadata snapshot. Project status is separate from GitHub visibility; repository activity and link availability are not checked live.</p><div className="source-stack"><h3>Recorded technologies</h3><div className="timeline-tags">{source.technologies.map(technology => <Link key={technology.id} href={`/technologies?technology=${encodeURIComponent(technology.id)}`}>{technology.name}</Link>)}</div></div><details className="metadata-evidence"><summary>Source evidence & review scope</summary><p>{source.notes}</p><ul>{source.sources.map((url, index) => <li key={`${url}-${index}`}><a href={url} target="_blank" rel="noopener noreferrer">{new URL(url).pathname.split('/').slice(4).join('/') || 'Repository evidence'}<ArrowUpRight size={12} aria-hidden="true"/><span className="sr-only"> (opens in new tab)</span></a></li>)}</ul></details></section>;
+}

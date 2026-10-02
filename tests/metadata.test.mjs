@@ -205,3 +205,17 @@ test('comparison sanitizes URL selections and derives overlap and unique technol
   for (const pattern of result.commonCapabilities) assert.ok(pattern.evidence.every(item => item.capability.name.toLowerCase().trim() === pattern.name.toLowerCase().trim()));
   assert.equal(compiledCompare.compareProjects(atlas, []).projects.length, 0);
 });
+
+import compiledSource from '../.metadata-test/explore/source.js';
+test('source summaries preserve canonical links and last-known evidence without guessing visibility', () => {
+  for (const project of atlas.projects) {
+    const source = compiledSource.projectSource(atlas, project);
+    assert.equal(source.repositoryUrl, project.repositoryUrl);
+    assert.equal(source.demoUrl, project.demoUrl);
+    assert.equal(source.reviewedOn, project.evidence.reviewedOn);
+    assert.equal(source.status, project.status);
+    assert.equal(source.repository, new URL(project.repositoryUrl).pathname.slice(1));
+    assert.equal(source.visibility, 'Not recorded');
+    assert.deepEqual(source.technologies.map(t => t.id).sort(), atlas.relationships.filter(r => r.type === 'uses' && r.projectId === project.id).map(r => r.technologyId).sort());
+  }
+});
