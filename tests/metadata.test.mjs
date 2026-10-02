@@ -191,3 +191,17 @@ test('relationship explorer filters, strengths, focus and cluster positions rema
   assert.equal(new Set([...layout.positions.values()].map(p => `${p.x}:${p.y}`)).size, full.nodes.length);
   assert.ok([...layout.positions.values()].every(p => p.x >= 0 && p.x <= layout.width && p.y >= 0 && p.y <= layout.height));
 });
+
+import compiledCompare from '../.metadata-test/explore/compare.js';
+test('comparison sanitizes URL selections and derives overlap and unique technologies', () => {
+  const slugs = atlas.projects.slice(0, 3).map(p => p.slug);
+  assert.deepEqual(compiledCompare.comparisonSlugs(atlas, `missing,${slugs[0]},${slugs[0]},${slugs[1]},${slugs[2]},${atlas.projects[3].slug}`), slugs);
+  const result = compiledCompare.compareProjects(atlas, slugs);
+  assert.equal(result.projects.length, 3);
+  for (const item of result.technologies) {
+    assert.deepEqual(item.projectIds, result.projects.filter(p => p.stack.some(use => use.technologyId === item.technology.id)).map(p => p.project.id));
+  }
+  assert.ok(result.shared.every(item => item.projectIds.length > 1));
+  for (const pattern of result.commonCapabilities) assert.ok(pattern.evidence.every(item => item.capability.name.toLowerCase().trim() === pattern.name.toLowerCase().trim()));
+  assert.equal(compiledCompare.compareProjects(atlas, []).projects.length, 0);
+});

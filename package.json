@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "test:metadata": "tsc --module commonjs --moduleResolution node --target ES2020 --esModuleInterop --resolveJsonModule --skipLibCheck --rootDir lib --outDir .metadata-test lib/metadata/index.ts lib/explore/filter.ts lib/explore/technology.ts lib/explore/skills.ts lib/explore/timeline.ts lib/explore/domains.ts lib/explore/graph-view.ts && node --test tests/metadata.test.mjs"
+    "test:metadata": "tsc --module commonjs --moduleResolution node --target ES2020 --esModuleInterop --resolveJsonModule --skipLibCheck --rootDir lib --outDir .metadata-test lib/metadata/index.ts lib/explore/filter.ts lib/explore/technology.ts lib/explore/skills.ts lib/explore/timeline.ts lib/explore/domains.ts lib/explore/graph-view.ts lib/explore/compare.ts && node --test tests/metadata.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.23.0",
