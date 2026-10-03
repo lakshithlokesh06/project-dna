@@ -219,3 +219,17 @@ test('source summaries preserve canonical links and last-known evidence without 
     assert.deepEqual(source.technologies.map(t => t.id).sort(), atlas.relationships.filter(r => r.type === 'uses' && r.projectId === project.id).map(r => r.technologyId).sort());
   }
 });
+
+import compiledSearch from '../.metadata-test/explore/search.js';
+test('global search derives unique metadata destinations, supports fuzzy matching and sanitizes recents', () => {
+  const index = compiledSearch.searchIndex(atlas);
+  assert.equal(new Set(index.map(e=>e.id)).size, index.length);
+  assert.equal(index.filter(e=>e.type==='Projects').length,23);
+  assert.equal(index.filter(e=>e.type==='Capabilities').length,68);
+  assert.ok(compiledSearch.searchEntries(index,'pythn').some(e=>e.name==='Python'));
+  assert.ok(compiledSearch.searchEntries(index,'house price').some(e=>e.href==='/projects/house-price-prediction-web-app'));
+  assert.equal(compiledSearch.searchEntries(index,'zxqv-no-matches-234').length,0);
+  assert.deepEqual(compiledSearch.recentEntries(index,[index[0].id,index[0].id,'missing',null]).map(e=>e.id),[index[0].id]);
+  assert.equal(compiledSearch.recentEntries(index,{}).length,0);
+  assert.ok(compiledSearch.searchEntries(index,'').every(e=>e.type==='Views'));
+});

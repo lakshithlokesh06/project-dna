@@ -7,9 +7,9 @@ import { ArrowUpRight } from 'lucide-react';
 import type { AtlasData } from '@/lib/explore/model';
 import { domainProfiles, searchDomainProjects } from '@/lib/explore/domains';
 import { projectStack } from '@/lib/explore/selectors';
-export function DomainExplorer({ data }: { data: AtlasData }) {
+export function DomainExplorer({ data, initialDomain }: { data: AtlasData; initialDomain?: string }) {
   const profiles = useMemo(() => domainProfiles(data), [data]);
-  const [selected, setSelected] = useState(data.domains[0]?.id);
+  const [selected, setSelected] = useState(data.domains.some(d=>d.id===initialDomain)?initialDomain!:data.domains[0]?.id);
   const [query, setQuery] = useState('');
   const [detailed, setDetailed] = useState(false);
   const reduced = useReducedMotion();
